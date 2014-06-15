@@ -1,0 +1,15 @@
+{% extends '::frontend.html.twig' %}
+
+{% block body -%}
+<div class="row">
+    <div class="col-sm-3">
+        {% block categorys -%}
+        {{ render(controller('FlowcodeShopBundle:Category:actives')) }}
+        {% endblock %}
+    </div>
+    <div class="col-sm-9">
+        {% block products -%}{% endblock %}
+    </div>
+
+</div>
+{% endblock %}

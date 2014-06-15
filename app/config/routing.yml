@@ -1,0 +1,78 @@
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+    prefix: /admin
+
+fos_user_profile:
+    resource: "@FOSUserBundle/Resources/config/routing/profile.xml"
+    prefix: /admin/profile
+
+fos_user_register:
+    resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
+    prefix: /admin/register
+
+fos_user_resetting:
+    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
+    prefix: /admin/resetting
+
+fos_user_change_password:
+    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
+    prefix: /admin/profile
+    
+flowcode_dashboard:
+    resource: "@FlowcodeDashboardBundle/Resources/config/routing.yml"
+    prefix:   /    
+
+_liip_imagine:
+    resource: "@LiipImagineBundle/Resources/config/routing.xml"    
+
+elfinder:
+     resource: "@FMElfinderBundle/Resources/config/routing.yml"
+
+root:
+    pattern: /
+    defaults:
+        _controller: FrameworkBundle:Redirect:urlRedirect
+        path: /%locale%/
+        permanent: true
+
+flowcode_page:
+    resource: "@FlowcodePageBundle/Controller/"
+    type:     annotation
+    prefix:   /
+    
+flowcode_demo:
+    resource: "@FlowcodeDemoBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+
+
+
+flowcode_media:
+    resource: "@FlowcodeMediaBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+flowcode_tag:
+    resource: "@FlowcodeTagBundle/Resources/config/routing.yml"
+    prefix:   /
+
+flowcode_news:
+    resource: "@FlowcodeNewsBundle/Resources/config/routing.yml"
+    prefix:   /
+    
+flowcode_shop:
+    resource: "@FlowcodeShopBundle/Controller/"
+    type:     annotation
+    prefix:   /
+    
+flowcode_project:
+    resource: "@FlowcodeProjectBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+flowcode_user:
+    resource: "@FlowcodeUserBundle/Controller/"
+    type:     annotation
+    prefix:   /    
+    

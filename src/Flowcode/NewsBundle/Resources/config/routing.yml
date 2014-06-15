@@ -1,0 +1,11 @@
+flowcode_news_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: FlowcodeNewsBundle:Default:index }
+
+admin_post:
+    resource: "@FlowcodeNewsBundle/Controller/AdminPostController.php"
+    type:     annotation
+
+post:
+    resource: "@FlowcodeNewsBundle/Controller/PostController.php"
+    type:     annotation

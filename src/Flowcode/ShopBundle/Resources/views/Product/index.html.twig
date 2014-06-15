@@ -1,0 +1,23 @@
+{% extends 'FlowcodeShopBundle::shop.html.twig' %}
+
+{% block products -%}
+<div class="row">
+    {% for entity in entities %}
+    <div class="col-sm-3">
+        <div class="" style="padding: 10px;">
+            <a href="{{ path('product_show', { 'slug': entity.slug }) }}">
+                <img src="{{ entity.getImage }}" alt="..." class="img-responsive">
+            </a>
+            <div class="caption" style="height: 200px;">
+                <h5>{{ entity.name }}</h5>
+                <p>
+                    <small>{{ entity.description }}</small>
+                </p>
+                <p>{{ 'price'|trans }}:{{ entity.price }}</p>
+                <p><a href="#" class="btn btn-primary btn-sm" role="button">{{ 'buy'|trans }}</a></p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

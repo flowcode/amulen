@@ -1,0 +1,13 @@
+/nbproject/private/
+/log/
+/app/cache/*
+/app/logs/*
+/app/*.cache
+/web/bundles
+/web/uploads/*
+/web/media/*
+/app/config/parameters*.yml
+
+composer.lock
+composer.phar
+/vendor/

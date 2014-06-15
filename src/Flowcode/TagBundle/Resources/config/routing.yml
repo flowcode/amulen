@@ -1,0 +1,7 @@
+flowcode_tag_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: FlowcodeTagBundle:Default:index }
+
+admin_tag:
+    resource: "@FlowcodeTagBundle/Controller/AdminTagController.php"
+    type:     annotation

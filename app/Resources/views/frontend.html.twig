@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html {{ sonata_seo_html_attributes() }} >
+    <head {{ sonata_seo_head_attributes() }} >
+        {{ sonata_seo_title() }}
+        {{ sonata_seo_metadatas() }}
+
+        {% block stylesheets %}
+        <link href="{{ asset('bundles/flowcodedemo/css/bootstrap.yeti.min.css') }}" rel="stylesheet" />
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" >
+        <link href="{{ asset('bundles/flowcodedemo/css/frontend.css') }}" rel="stylesheet" />
+        <link href="{{ asset('bundles/flowcodedemo/css/fonts/fonts.css') }}" rel="stylesheet" />
+        {% endblock %}
+        <link rel="icon" type="image/png" href="{{ asset('img/bicicleta-icon.jpg') }}" />
+    </head>
+    <body>
+
+        <div id="header">
+            <div class="container">
+                <span class="title">MiWeb</span>
+                <ul id="main-menu" class="nav nav-pills pull-right">
+                    <li data-toggle="inicio"><a href="{{ path('home') }}"><i class="glyphicon glyphicon-home"></i></a></li>
+                    <li data-toggle="about"><a href="/app_dev.php/es/about">{{ 'About'|trans }}</a></li>
+                    <li data-toggle="project"><a href="{{ path('project') }}">{{ 'Projects'|trans }}</a></li> 
+                    <li data-toggle="blog"><a href="{{ path('post') }}">{{ 'News'|trans }}</a></li>
+                    <li data-toggle="productos"><a href="{{ path('product') }}">{{ 'Products'|trans }}</a></li>
+
+                    <!-- inicio carrito miweb (no se pueden usar los carritos al mismo tiempo) -->
+                    <li data-toggle="carrito"><a href="" title="carrito">Shop <i class="glyphicon glyphicon-shopping-cart"></i><span class="badge" id="carrito-count">0</span></a></li>
+                    <!-- fin carrito miweb -->
+                </ul>
+            </div>
+            <div class="container">
+                <div class="pull-right form-inline col-xs-2" style="text-align: right;">
+                    {{ locale_switcher() }}
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+        {% block body %}{% endblock %}
+        </div>
+
+        {% block javascripts %}
+        <script type="text/javascript" src="//code.jquery.com/jquery.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        {% endblock %}
+    </body>
+
+</html>

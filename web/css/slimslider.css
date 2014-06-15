@@ -1,0 +1,79 @@
+/**
+ * Plugin base styles 
+ */
+
+.slider { 
+    position: relative;
+    width: 100%; 
+    overflow: hidden; 
+}
+
+.slides { 
+    position: relative;
+    padding: 0;
+    list-style: none;
+    letter-spacing: 0;
+    word-spacing: 0;
+    font-size: 0;
+    -webkit-backface-visibility: hidden;
+    -webkit-transform: translate3d(0,0,0);
+}
+
+.slides li { display: inline-block; }
+
+.slides li img { 
+    width: 100%; 
+    height: auto;
+}
+
+/**
+ * Recommended defaults
+ */
+
+.slide-nav { 
+    position: absolute; 
+    bottom: 20px;
+    right: 20px;
+    z-index: 1;
+}
+
+.slide-nav ul {
+    letter-spacing: 0;
+    word-spacing: 0;
+    font-size: 0;
+}
+
+.slide-nav li { display: inline-block; }
+
+.slide-nav li a {
+    display: block;
+    color: #444;
+    background: white;
+    text-decoration: none;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
+    font-size: 12px;
+    text-align: center;
+    margin: 0 0 0 6px;
+}
+
+.slide-nav li a.active { color: #DEBB1E; }
+
+/** 
+ * Non-plugin styles 
+ */
+
+* { 
+    margin: 0; 
+    padding: 0; 
+}
+
+/**
+ * Our lone media query
+ */
+
+@media only screen and (max-width: 500px) {
+    .colophon { font-size: 1rem; }
+}

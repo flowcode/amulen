@@ -1,0 +1,31 @@
+{% extends '::backend.html.twig' %}
+
+{% block body -%}
+<h1>Edit Media
+    <small>{{ entity.name }}</small>
+</h1>
+
+<h3>Items</h3>
+{{ form_start(form) }}
+<table class="table table-condensed">
+    {% for item in form.galleryItems %}
+    <tr>
+        <td>{{ form_row(item.position) }}</td>
+        <td>{{ form_row(item.media) }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{{ form_end(form) }}
+
+
+<ul class="record_actions list-inline">
+    <li>
+        <a class="btn btn-default" href="{{ path('admin_product') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <button class="btn btn-default" type="button">Agregar Imagen</button>
+    </li>
+</ul>
+{% endblock %}

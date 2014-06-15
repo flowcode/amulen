@@ -1,0 +1,7 @@
+flowcode_dashboard_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: FlowcodeDashboardBundle:Default:index }
+
+admin_dashboard:
+    resource: "@FlowcodeDashboardBundle/Controller/DefaultController.php"
+    type:     annotation

@@ -1,0 +1,41 @@
+{% extends '::backend.html.twig' %}
+
+{% block body -%}
+    <h1>ProductOrderItem list</h1>
+
+    <table class="records_list table table-condensed">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Quantity</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('admin_orderitem_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.quantity }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('admin_orderitem_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_orderitem_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('admin_orderitem_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

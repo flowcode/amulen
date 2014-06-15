@@ -1,0 +1,15 @@
+lunetics_locale:
+  strict_mode: false
+  allowed_locales:
+    - es
+    - en
+  guessing_order:
+    - session
+    - cookie
+    - browser
+    - query
+    - router
+  cookie:
+    set_on_change: true
+  switcher:
+    template: FlowcodePageBundle:Default:switcher_links.html.twig

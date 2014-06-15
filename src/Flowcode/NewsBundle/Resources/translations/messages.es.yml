@@ -1,0 +1,25 @@
+Title: Titulo
+Image: Imagen
+Abstract: Introduccion
+Content: Contenido
+Enabled: Activo
+Update: Actualizar
+Delete: Eliminar
+
+post:
+    edit:
+        title: Editar post
+        submit: Actualizar Post
+        back: Volver a la lista
+    show:
+        title: Nombre de post
+    new:
+        title: Crear post
+        submit: Crear Post
+    list:
+        title: Posts
+    flash:
+        updated: El post ha sido actualizado
+        created: El post ha sido creado
+        deleted: El post ha sido borrado
+

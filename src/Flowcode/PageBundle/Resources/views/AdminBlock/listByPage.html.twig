@@ -1,0 +1,47 @@
+{% extends '::backend.html.twig' %}
+
+{% block body -%}
+<div class="page-header">
+    <h1>Block list
+        <small>{{ page.name }}</small>
+    </h1>
+</div>
+
+<table class="records_list table table-condensed">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>{{ "Name"|trans }}</th>
+            <th>{{ "Type"|trans }}</th>
+            <th>{{ "Actions"|trans }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('block_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.name }}</td>
+            <td>{{ entity.getBlockType.name }}</td>
+            <td>
+                <ul class="list-inline">
+                    <li>
+                        <a href="{{ path('block_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('block_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('block_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+    {% endblock %}
