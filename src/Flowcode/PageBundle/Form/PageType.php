@@ -16,7 +16,13 @@ class PageType extends AbstractType {
         $builder
                 ->add('name')
                 ->add('description')
-                ->add('template')
+                ->add('template', 'choice', array(
+                    'choices' => array(
+                        'FlowcodePageBundle:Page:default.html.twig' => 'default',
+                        'FlowcodePageBundle:Page:default-well.html' => 'with well'
+                    ),
+                    'required' => false,
+                ))
                 ->add('enabled', null, array('required' => false,))
         ;
     }

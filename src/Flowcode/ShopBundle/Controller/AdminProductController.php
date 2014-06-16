@@ -2,13 +2,18 @@
 
 namespace Flowcode\ShopBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Flowcode\MediaBundle\Entity\Gallery;
+use Flowcode\MediaBundle\Entity\GalleryItem;
+use Flowcode\MediaBundle\Form\GalleryItemType;
+use Flowcode\MediaBundle\Form\ImageGalleryType;
+use Flowcode\ShopBundle\Entity\Product;
+use Flowcode\ShopBundle\Form\ProductType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Flowcode\ShopBundle\Entity\Product;
-use Flowcode\ShopBundle\Form\ProductType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Product controller.
@@ -50,16 +55,16 @@ class AdminProductController extends Controller {
             $em = $this->getDoctrine()->getManager();
             /* persist product */
             $em->persist($entity);
-            
+
             /* create media gallery */
-            $mediaGallery = new \Flowcode\MediaBundle\Entity\Gallery();
+            $mediaGallery = new Gallery();
             $mediaGallery->setName($entity->getName());
             $mediaGallery->setEnabled(true);
             $em->persist($mediaGallery);
-            
+
             /* set media gallery */
             $entity->setMediaGallery($mediaGallery);
-            
+
             $em->flush();
 
             $this->get('session')->getFlashBag()->add(
@@ -67,11 +72,10 @@ class AdminProductController extends Controller {
             );
 
             return $this->redirect($this->generateUrl('admin_product_show', array('id' => $entity->getId())));
-        }  else {
+        } else {
             $this->get('session')->getFlashBag()->add(
                     'warning', 'Error'
             );
-            
         }
 
         return array(
@@ -85,7 +89,7 @@ class AdminProductController extends Controller {
      *
      * @param Product $entity The entity
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createCreateForm(Product $entity) {
         $form = $this->createForm(new ProductType(), $entity, array(
@@ -170,7 +174,7 @@ class AdminProductController extends Controller {
      *
      * @param Product $entity The entity
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createEditForm(Product $entity) {
         $form = $this->createForm(new ProductType(), $entity, array(
@@ -182,16 +186,16 @@ class AdminProductController extends Controller {
 
         return $form;
     }
-    
+
     /**
      * Creates a form to edit a Product entity.
      *
      * @param Product $entity The entity
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
-    private function createEditGalleryForm(\Flowcode\MediaBundle\Entity\Gallery $entity) {
-        $form = $this->createForm(new \Flowcode\MediaBundle\Form\ImageGalleryType(), $entity, array(
+    private function createEditGalleryForm(Gallery $entity) {
+        $form = $this->createForm(new ImageGalleryType(), $entity, array(
             'action' => $this->generateUrl('admin_product_update_gallery', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
@@ -264,7 +268,7 @@ class AdminProductController extends Controller {
      *
      * @param mixed $id The entity id
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createDeleteForm($id) {
         return $this->createFormBuilder()
@@ -274,7 +278,67 @@ class AdminProductController extends Controller {
                         ->getForm()
         ;
     }
+
+    /**
+     * Displays a form to create a new Gallery entity.
+     *
+     * @Route("/{id}/addimage", name="admin_product_new_image")
+     * @Method("GET")
+     * @Template()
+     */
+    public function addimageAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $product = $em->getRepository('FlowcodeShopBundle:Product')->find($id);
+        $gallery = $product->getMediaGallery();
+        $entity = new GalleryItem();
+        $entity->setGallery($gallery);
+        $position = $gallery->getGalleryItems()->count() + 1;
+        $entity->setPosition($position);
+        
+        $form = $this->createForm(new GalleryItemType(), $entity, array(
+            'action' => $this->generateUrl('admin_galleryitem_create'),
+            'method' => 'POST',
+        ));
+        $form->add('submit', 'submit', array('label' => 'Create'));
+        
+        return array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+        );
+    }
     
+    /**
+     * Creates a new GalleryItem entity.
+     *
+     * @Route("/", name="admin_product_create_image")
+     * @Method("POST")
+     * @Template("FlowcodeProductBundle:Product:addimage.html.twig")
+     */
+    public function createImageAction(Request $request)
+    {
+        $entity = new GalleryItem();
+        $form = $this->createForm(new GalleryItemType(), $entity, array(
+            'action' => $this->generateUrl('admin_galleryitem_create'),
+            'method' => 'POST',
+        ));
+        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('admin_product_show', array('id' => $entity->getId())));
+        }
+
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+        );
+    }
+
     /**
      * Edit media.
      *
@@ -286,19 +350,19 @@ class AdminProductController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('FlowcodeShopBundle:Product')->find($id);
-        
+
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Product entity.');
         }
 
         $form = $this->createEditGalleryForm($entity->getMediaGallery());
-        
+
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
         );
     }
-    
+
     /**
      * Edits an existing Product Gallery entity.
      *

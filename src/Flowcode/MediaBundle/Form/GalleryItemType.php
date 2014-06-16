@@ -16,7 +16,7 @@ class GalleryItemType extends AbstractType
     {
         $builder
             ->add('position')
-            ->add('media')
+            ->add('media', new MediaType())
             ->add('gallery')
         ;
     }

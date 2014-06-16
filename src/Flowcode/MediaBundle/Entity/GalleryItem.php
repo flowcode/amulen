@@ -35,7 +35,7 @@ class GalleryItem {
     private $position;
 
     /**
-     * @OneToOne(targetEntity="Media")
+     * @OneToOne(targetEntity="Media", cascade={"persist"})
      * @JoinColumn(name="media_id", referencedColumnName="id")
      * */
     private $media;
