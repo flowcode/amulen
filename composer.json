@@ -43,7 +43,8 @@
         "stof/doctrine-extensions-bundle": "~1.1@dev",
         "egeloen/ckeditor-bundle": "~2.0",
         "liip/imagine-bundle": "dev-master",
-        "friendsofsymfony/user-bundle": "~2.0@dev"
+        "friendsofsymfony/user-bundle": "~2.0@dev",
+        "oyejorge/less.php": "~1.5"
     },
     "scripts": {
         "post-install-cmd": [
