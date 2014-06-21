@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Flowcode\ShopBundle\Entity\Category;
+use Flowcode\ClassificationBundle\Entity\Category;
 
 /**
  * Category controller.
@@ -24,7 +24,7 @@ class CategoryController extends Controller {
      */
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('FlowcodeShopBundle:Category')->findAll();
+        $entities = $em->getRepository('FlowcodeClassificationBundle:Category')->findAll();
 
         return array(
             'entities' => $entities,
@@ -33,7 +33,7 @@ class CategoryController extends Controller {
 
     public function activesAction() {
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('FlowcodeShopBundle:Category')->findAll();
+        $entities = $em->getRepository('FlowcodeClassificationBundle:Category')->findAll();
 
         return $this->render(
                         'FlowcodeShopBundle:Category:leftcolumn.html.twig', array('entities' => $entities)
@@ -50,7 +50,7 @@ class CategoryController extends Controller {
     public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('FlowcodeShopBundle:Category')->find($id);
+        $entity = $em->getRepository('FlowcodeClassificationBundle:Category')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Category entity.');

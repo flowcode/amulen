@@ -13,25 +13,17 @@
                 <th>Name</th>
                 <td>{{ entity.name }}</td>
             </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ entity.description }}</td>
-            </tr>
-            <tr>
-                <th>Enabled</th>
-                <td>{{ entity.enabled }}</td>
-            </tr>
         </tbody>
     </table>
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('admin_category') }}">
+        <a href="{{ path('admin_shop_category') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('admin_category_edit', { 'id': entity.id }) }}">
+        <a href="{{ path('admin_shop_category_edit', { 'id': entity.id }) }}">
             Edit
         </a>
     </li>

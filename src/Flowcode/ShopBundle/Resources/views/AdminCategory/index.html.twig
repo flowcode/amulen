@@ -5,34 +5,40 @@
 <ol class="breadcrumb">
     <li><a href="{{ path('admin_dashboard') }}">Home</a></li>
     <li><a href="{{ path('admin_shop_dashboard') }}">Shop Dashboard</a></li>
-    <li>Categorys</li>
+    <li>{{ "product categorys"|trans }}</li>
 </ol>
-<h1>Category list</h1>
-
+<div class="page-header">
+    <h1>{{ "product categorys"|trans|title }}</h1>
+    <ul class="list-inline">
+        <li>
+            <a href="{{ path('admin_shop_category_children', { 'id': rootcategory.id }) }}" class="btn btn-bg btn-primary">
+            {{ "create new"|trans }}
+            </a>
+        </li>
+    </ul>
+</div>
 <table class="records_list table table-condensed">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Enabled</th>
-            <th>Actions</th>
+            <th>#</th>
+            <th>{{ "name"|trans }}</th>
+            <th>{{ "actions"|trans }}</th>
         </tr>
     </thead>
     <tbody>
         {% for entity in entities %}
         <tr>
-            <td><a href="{{ path('admin_category_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td><a href="{{ path('admin_shop_category_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
             <td>{{ entity.name }}</td>
-            <td>{{ entity.description }}</td>
-            <td>{{ entity.enabled }}</td>
             <td>
-                <ul>
+                <ul class="list-inline">
                     <li>
-                        <a href="{{ path('admin_category_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('admin_shop_category_show', { 'id': entity.id }) }}">
+                            {{ "show"|trans }}
+                        </a>
                     </li>
                     <li>
-                        <a href="{{ path('admin_category_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('admin_shop_category_edit', { 'id': entity.id }) }}">{{ "edit"|trans }}</a>
                     </li>
                 </ul>
             </td>
@@ -41,11 +47,5 @@
     </tbody>
 </table>
 
-<ul>
-    <li>
-        <a href="{{ path('admin_category_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
+
     {% endblock %}

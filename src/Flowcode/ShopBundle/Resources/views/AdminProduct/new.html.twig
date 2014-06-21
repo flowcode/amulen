@@ -1,15 +1,17 @@
 {% extends '::backend.html.twig' %}
 
 {% block body -%}
-    <h1>Product creation</h1>
+<div class="page-header">    
+    <h1>{{ "new product" |trans|title }}</h1>
+    <ul class="record_actions list-inline">
+        <li>
+            <a href="{{ path('admin_product') }}" class="btn btn-default">
+                <i class="glyphicon glyphicon-arrow-left"></i> {{ "back to list" |trans }}
+            </a>
+        </li>
+    </ul>
+</div>
 
-    {{ form(form, { 'style': 'horizontal' }) }}
+{{ form(form, { 'style': 'horizontal', 'align_with_widget': true }) }}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_product') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
 {% endblock %}

@@ -1,11 +1,12 @@
 {% extends '::backend.html.twig' %}
 
 {% block body -%}
+<div class="page-header">
     <h1>Category edit</h1>
+</div>
+{{ form(edit_form) }}
 
-    {{ form(edit_form) }}
-
-        <ul class="record_actions">
+<ul class="record_actions">
     <li>
         <a href="{{ path('admin_category') }}">
             Back to the list

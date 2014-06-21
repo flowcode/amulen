@@ -277,4 +277,25 @@ class Page {
         return $block2return;
     }
 
+    /**
+     * Set template
+     *
+     * @param string $template
+     * @return Page
+     */
+    public function setTemplate($template) {
+        $this->template = $template;
+
+        return $this;
+    }
+
+    /**
+     * Get template
+     *
+     * @return string 
+     */
+    public function getTemplate() {
+        return $this->template;
+    }
+
 }

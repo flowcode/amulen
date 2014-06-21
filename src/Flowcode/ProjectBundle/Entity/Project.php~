@@ -38,6 +38,7 @@ class Project {
     /**
      * @var string
      *
+     * @Gedmo\Slug(fields={"name"})
      * @ORM\Column(name="slug", type="string", length=255)
      */
     private $slug;
@@ -64,13 +65,13 @@ class Project {
     private $enabled;
 
     /**
-     * @ManyToOne(targetEntity="Category", inversedBy="projects")
+     * @ManyToOne(targetEntity="Flowcode\ClassificationBundle\Entity\Category")
      * @JoinColumn(name="category_id", referencedColumnName="id")
      * */
     private $category;
 
     /**
-     * @ManyToMany(targetEntity="Flowcode\TagBundle\Entity\Tag")
+     * @ManyToMany(targetEntity="Flowcode\ClassificationBundle\Entity\Tag")
      * @JoinTable(name="project_tag",
      *      joinColumns={@JoinColumn(name="project_id", referencedColumnName="id")},
      *      inverseJoinColumns={@JoinColumn(name="tag_id", referencedColumnName="id", unique=true)}
@@ -218,15 +219,13 @@ class Project {
         return $this->enabled;
     }
 
-
     /**
      * Set created
      *
      * @param \DateTime $created
      * @return Project
      */
-    public function setCreated($created)
-    {
+    public function setCreated($created) {
         $this->created = $created;
 
         return $this;
@@ -237,8 +236,7 @@ class Project {
      *
      * @return \DateTime 
      */
-    public function getCreated()
-    {
+    public function getCreated() {
         return $this->created;
     }
 
@@ -248,8 +246,7 @@ class Project {
      * @param \DateTime $updated
      * @return Project
      */
-    public function setUpdated($updated)
-    {
+    public function setUpdated($updated) {
         $this->updated = $updated;
 
         return $this;
@@ -260,19 +257,17 @@ class Project {
      *
      * @return \DateTime 
      */
-    public function getUpdated()
-    {
+    public function getUpdated() {
         return $this->updated;
     }
 
     /**
      * Set category
      *
-     * @param \Flowcode\ProjectBundle\Entity\Category $category
+     * @param Flowcode\ClassificationBundle\Entity\Category $category
      * @return Project
      */
-    public function setCategory(\Flowcode\ProjectBundle\Entity\Category $category = null)
-    {
+    public function setCategory(Flowcode\ClassificationBundle\Entity\Category $category = null) {
         $this->category = $category;
 
         return $this;
@@ -281,21 +276,19 @@ class Project {
     /**
      * Get category
      *
-     * @return \Flowcode\ProjectBundle\Entity\Category 
+     * @return Flowcode\ClassificationBundle\Entity\Category 
      */
-    public function getCategory()
-    {
+    public function getCategory() {
         return $this->category;
     }
 
     /**
      * Add tags
      *
-     * @param \Flowcode\TagBundle\Entity\Tag $tags
+     * @param \Flowcode\ClassificationBundle\Entity\Tag $tags
      * @return Project
      */
-    public function addTag(\Flowcode\TagBundle\Entity\Tag $tags)
-    {
+    public function addTag(\Flowcode\ClassificationBundle\Entity\Tag $tags) {
         $this->tags[] = $tags;
 
         return $this;
@@ -304,10 +297,9 @@ class Project {
     /**
      * Remove tags
      *
-     * @param \Flowcode\TagBundle\Entity\Tag $tags
+     * @param \Flowcode\ClassificationBundle\Entity\Tag $tags
      */
-    public function removeTag(\Flowcode\TagBundle\Entity\Tag $tags)
-    {
+    public function removeTag(\Flowcode\ClassificationBundle\Entity\Tag $tags) {
         $this->tags->removeElement($tags);
     }
 
@@ -316,8 +308,7 @@ class Project {
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getTags()
-    {
+    public function getTags() {
         return $this->tags;
     }
 
@@ -327,8 +318,7 @@ class Project {
      * @param \Flowcode\MediaBundle\Entity\Gallery $mediaGallery
      * @return Project
      */
-    public function setMediaGallery(\Flowcode\MediaBundle\Entity\Gallery $mediaGallery = null)
-    {
+    public function setMediaGallery(\Flowcode\MediaBundle\Entity\Gallery $mediaGallery = null) {
         $this->mediaGallery = $mediaGallery;
 
         return $this;
@@ -339,8 +329,12 @@ class Project {
      *
      * @return \Flowcode\MediaBundle\Entity\Gallery 
      */
-    public function getMediaGallery()
-    {
+    public function getMediaGallery() {
         return $this->mediaGallery;
     }
+
+    public function __toString() {
+        return $this->name;
+    }
+
 }

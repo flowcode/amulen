@@ -4,19 +4,27 @@
 <ol class="breadcrumb">
     <li><a href="{{ path('admin_dashboard') }}">Home</a></li>
     <li><a href="{{ path('admin_shop_dashboard') }}">Shop Dashboard</a></li>
-    <li>Products</li>
+    <li>{{ "products"|trans }}</li>
 </ol>
-<h1>Product list</h1>
-
+<div class="page-header">
+    <h1>{{ "products"|trans|title }}</h1>
+    <ul class="list-inline">
+        <li>
+            <a href="{{ path('admin_product_new') }}" class="btn btn-default">
+                {{ "create new"|trans }}
+            </a>
+        </li>
+    </ul>
+</div>
 <table class="records_list table table-condensed">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Enabled</th>
-            <th>Actions</th>
+            <th>#</th>
+            <th>{{ "name"|trans }}</th>
+            <th>{{ "description"|trans }}</th>
+            <th>{{ "price"|trans }}</th>
+            <th>{{ "enabled"|trans }}</th>
+            <th>{{ "actions"|trans }}</th>
         </tr>
     </thead>
     <tbody>
@@ -26,14 +34,14 @@
             <td>{{ entity.name }}</td>
             <td>{{ entity.description }}</td>
             <td>{{ entity.price }}</td>
-            <td>{{ entity.enabled }}</td>
+            <td>{{ entity.enabled ? 'yes'|trans : 'no'|trans }}</td>
             <td>
                 <ul class="list-inline">
                     <li>
-                        <a href="{{ path('admin_product_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('admin_product_show', { 'id': entity.id }) }}">{{ "show"|trans }}</a>
                     </li>
                     <li>
-                        <a href="{{ path('admin_product_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('admin_product_edit', { 'id': entity.id }) }}">{{ "edit"|trans }}</a>
                     </li>
                 </ul>
             </td>
@@ -42,11 +50,5 @@
     </tbody>
 </table>
 
-<ul>
-    <li>
-        <a href="{{ path('admin_product_new') }}">
-            Create a new entry
-        </a>
-    </li>
-</ul>
-    {% endblock %}
+
+{% endblock %}

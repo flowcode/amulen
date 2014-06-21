@@ -56,14 +56,16 @@ class AdminProductController extends Controller {
             /* persist product */
             $em->persist($entity);
 
-            /* create media gallery */
-            $mediaGallery = new Gallery();
-            $mediaGallery->setName($entity->getName());
-            $mediaGallery->setEnabled(true);
-            $em->persist($mediaGallery);
+            if (is_null($entity->getMediaGallery())) {
+                /* create media gallery */
+                $mediaGallery = new Gallery();
+                $mediaGallery->setName($entity->getName());
+                $mediaGallery->setEnabled(true);
+                $em->persist($mediaGallery);
 
-            /* set media gallery */
-            $entity->setMediaGallery($mediaGallery);
+                /* set media gallery */
+                $entity->setMediaGallery($mediaGallery);
+            }
 
             $em->flush();
 
@@ -295,19 +297,19 @@ class AdminProductController extends Controller {
         $entity->setGallery($gallery);
         $position = $gallery->getGalleryItems()->count() + 1;
         $entity->setPosition($position);
-        
+
         $form = $this->createForm(new GalleryItemType(), $entity, array(
             'action' => $this->generateUrl('admin_galleryitem_create'),
             'method' => 'POST',
         ));
         $form->add('submit', 'submit', array('label' => 'Create'));
-        
+
         return array(
             'entity' => $entity,
             'form' => $form->createView(),
         );
     }
-    
+
     /**
      * Creates a new GalleryItem entity.
      *
@@ -315,8 +317,7 @@ class AdminProductController extends Controller {
      * @Method("POST")
      * @Template("FlowcodeProductBundle:Product:addimage.html.twig")
      */
-    public function createImageAction(Request $request)
-    {
+    public function createImageAction(Request $request) {
         $entity = new GalleryItem();
         $form = $this->createForm(new GalleryItemType(), $entity, array(
             'action' => $this->generateUrl('admin_galleryitem_create'),
@@ -335,7 +336,7 @@ class AdminProductController extends Controller {
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 

@@ -2,18 +2,19 @@
 
 namespace Flowcode\ProjectBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Flowcode\ClassificationBundle\Entity\Category;
+use Flowcode\ProjectBundle\Form\CategoryType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Flowcode\ProjectBundle\Entity\Category;
-use Flowcode\ProjectBundle\Form\CategoryType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Category controller.
  *
- * @Route("/admin/project-category")
+ * @Route("/admin/project/category")
  */
 class AdminCategoryController extends Controller {
 
@@ -65,7 +66,7 @@ class AdminCategoryController extends Controller {
      *
      * @param Category $entity The entity
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createCreateForm(Category $entity) {
         $form = $this->createForm(new CategoryType(), $entity, array(
@@ -150,7 +151,7 @@ class AdminCategoryController extends Controller {
      *
      * @param Category $entity The entity
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createEditForm(Category $entity) {
         $form = $this->createForm(new CategoryType(), $entity, array(
@@ -226,7 +227,7 @@ class AdminCategoryController extends Controller {
      *
      * @param mixed $id The entity id
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createDeleteForm($id) {
         return $this->createFormBuilder()

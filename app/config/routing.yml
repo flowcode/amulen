@@ -40,21 +40,14 @@ flowcode_page:
     type:     annotation
     prefix:   /
     
-flowcode_demo:
-    resource: "@FlowcodeDemoBundle/Controller/"
+flowcode_classification:
+    resource: "@FlowcodeClassificationBundle/Controller/"
     type:     annotation
     prefix:   /
-
-
-
 
 flowcode_media:
     resource: "@FlowcodeMediaBundle/Controller/"
     type:     annotation
-    prefix:   /
-
-flowcode_tag:
-    resource: "@FlowcodeTagBundle/Resources/config/routing.yml"
     prefix:   /
 
 flowcode_news:
@@ -76,3 +69,7 @@ flowcode_user:
     type:     annotation
     prefix:   /    
     
+flowcode_demo:
+    resource: "@FlowcodeDemoBundle/Controller/"
+    type:     annotation
+    prefix:   /

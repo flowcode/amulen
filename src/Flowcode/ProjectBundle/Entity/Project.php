@@ -65,13 +65,13 @@ class Project {
     private $enabled;
 
     /**
-     * @ManyToOne(targetEntity="Category", inversedBy="projects")
+     * @ManyToOne(targetEntity="Flowcode\ClassificationBundle\Entity\Category")
      * @JoinColumn(name="category_id", referencedColumnName="id")
      * */
     private $category;
 
     /**
-     * @ManyToMany(targetEntity="Flowcode\TagBundle\Entity\Tag")
+     * @ManyToMany(targetEntity="Flowcode\ClassificationBundle\Entity\Tag")
      * @JoinTable(name="project_tag",
      *      joinColumns={@JoinColumn(name="project_id", referencedColumnName="id")},
      *      inverseJoinColumns={@JoinColumn(name="tag_id", referencedColumnName="id", unique=true)}
@@ -264,10 +264,10 @@ class Project {
     /**
      * Set category
      *
-     * @param \Flowcode\ProjectBundle\Entity\Category $category
+     * @param Flowcode\ClassificationBundle\Entity\Category $category
      * @return Project
      */
-    public function setCategory(\Flowcode\ProjectBundle\Entity\Category $category = null) {
+    public function setCategory(Flowcode\ClassificationBundle\Entity\Category $category = null) {
         $this->category = $category;
 
         return $this;
@@ -276,7 +276,7 @@ class Project {
     /**
      * Get category
      *
-     * @return \Flowcode\ProjectBundle\Entity\Category 
+     * @return Flowcode\ClassificationBundle\Entity\Category 
      */
     public function getCategory() {
         return $this->category;
@@ -285,10 +285,10 @@ class Project {
     /**
      * Add tags
      *
-     * @param \Flowcode\TagBundle\Entity\Tag $tags
+     * @param \Flowcode\ClassificationBundle\Entity\Tag $tags
      * @return Project
      */
-    public function addTag(\Flowcode\TagBundle\Entity\Tag $tags) {
+    public function addTag(\Flowcode\ClassificationBundle\Entity\Tag $tags) {
         $this->tags[] = $tags;
 
         return $this;
@@ -297,9 +297,9 @@ class Project {
     /**
      * Remove tags
      *
-     * @param \Flowcode\TagBundle\Entity\Tag $tags
+     * @param \Flowcode\ClassificationBundle\Entity\Tag $tags
      */
-    public function removeTag(\Flowcode\TagBundle\Entity\Tag $tags) {
+    public function removeTag(\Flowcode\ClassificationBundle\Entity\Tag $tags) {
         $this->tags->removeElement($tags);
     }
 

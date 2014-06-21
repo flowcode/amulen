@@ -2,48 +2,49 @@
 
 namespace Flowcode\ShopBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Flowcode\ClassificationBundle\Entity\Category;
+use Flowcode\ClassificationBundle\Form\CategoryType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Flowcode\ShopBundle\Entity\Category;
-use Flowcode\ShopBundle\Form\CategoryType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Category controller.
  *
- * @Route("/admin/category")
+ * @Route("/admin/shop/category")
  */
-class AdminCategoryController extends Controller
-{
+class AdminCategoryController extends Controller {
 
     /**
      * Lists all Category entities.
      *
-     * @Route("/", name="admin_category")
+     * @Route("/", name="admin_shop_category")
      * @Method("GET")
      * @Template()
      */
-    public function indexAction()
-    {
+    public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('FlowcodeShopBundle:Category')->findAll();
+        $root = $em->getRepository('FlowcodeClassificationBundle:Category')->findOneBy(array("name" => "product"));
+        $entities = $em->getRepository('FlowcodeClassificationBundle:Category')->getChildren($root);
 
         return array(
             'entities' => $entities,
+            'rootcategory' => $root,
         );
     }
+
     /**
      * Creates a new Category entity.
      *
-     * @Route("/", name="admin_category_create")
+     * @Route("/", name="admin_shop_category_create")
      * @Method("POST")
      * @Template("FlowcodeShopBundle:Category:new.html.twig")
      */
-    public function createAction(Request $request)
-    {
+    public function createAction(Request $request) {
         $entity = new Category();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
@@ -53,26 +54,25 @@ class AdminCategoryController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_category_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('admin_shop_category_show', array('id' => $entity->getId())));
         }
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
     /**
-    * Creates a form to create a Category entity.
-    *
-    * @param Category $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createCreateForm(Category $entity)
-    {
+     * Creates a form to create a Category entity.
+     *
+     * @param Category $entity The entity
+     *
+     * @return Form The form
+     */
+    private function createCreateForm(Category $entity) {
         $form = $this->createForm(new CategoryType(), $entity, array(
-            'action' => $this->generateUrl('admin_category_create'),
+            'action' => $this->generateUrl('admin_shop_category_create'),
             'method' => 'POST',
         ));
 
@@ -84,33 +84,56 @@ class AdminCategoryController extends Controller
     /**
      * Displays a form to create a new Category entity.
      *
-     * @Route("/new", name="admin_category_new")
+     * @Route("/new/{parent_id}", name="admin_shop_category_new")
      * @Method("GET")
      * @Template()
      */
-    public function newAction()
-    {
+    public function newAction($parent_id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $parent = $em->getRepository('FlowcodeClassificationBundle:Category')->findOneBy(array("id" => $parent_id));
+        
         $entity = new Category();
-        $form   = $this->createCreateForm($entity);
+        $entity->setParent($parent);
+
+        $form = $this->createCreateForm($entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
+        );
+    }
+
+    /**
+     * Select parent.
+     *
+     * @Route("/childrens/{id}", name="admin_shop_category_children")
+     * @Method("GET")
+     * @Template()
+     */
+    public function childrensAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $parent = $em->getRepository('FlowcodeClassificationBundle:Category')->findOneBy(array("id" => $id));
+        $childrens = $em->getRepository('FlowcodeClassificationBundle:Category')->getChildren($parent, true);
+
+        return array(
+            'entities' => $childrens,
+            'parent' => $parent,
         );
     }
 
     /**
      * Finds and displays a Category entity.
      *
-     * @Route("/{id}", name="admin_category_show")
+     * @Route("/{id}", name="admin_shop_category_show")
      * @Method("GET")
      * @Template()
      */
-    public function showAction($id)
-    {
+    public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('FlowcodeShopBundle:Category')->find($id);
+        $entity = $em->getRepository('FlowcodeClassificationBundle:Category')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Category entity.');
@@ -119,7 +142,7 @@ class AdminCategoryController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -127,12 +150,11 @@ class AdminCategoryController extends Controller
     /**
      * Displays a form to edit an existing Category entity.
      *
-     * @Route("/{id}/edit", name="admin_category_edit")
+     * @Route("/{id}/edit", name="admin_shop_category_edit")
      * @Method("GET")
      * @Template()
      */
-    public function editAction($id)
-    {
+    public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('FlowcodeShopBundle:Category')->find($id);
@@ -145,23 +167,22 @@ class AdminCategoryController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
 
     /**
-    * Creates a form to edit a Category entity.
-    *
-    * @param Category $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Category $entity)
-    {
+     * Creates a form to edit a Category entity.
+     *
+     * @param Category $entity The entity
+     *
+     * @return Form The form
+     */
+    private function createEditForm(Category $entity) {
         $form = $this->createForm(new CategoryType(), $entity, array(
-            'action' => $this->generateUrl('admin_category_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('admin_shop_category_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -169,15 +190,15 @@ class AdminCategoryController extends Controller
 
         return $form;
     }
+
     /**
      * Edits an existing Category entity.
      *
-     * @Route("/{id}", name="admin_category_update")
+     * @Route("/{id}", name="admin_shop_category_update")
      * @Method("PUT")
      * @Template("FlowcodeShopBundle:Category:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
-    {
+    public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('FlowcodeShopBundle:Category')->find($id);
@@ -193,23 +214,23 @@ class AdminCategoryController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_category_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('admin_shop_category_edit', array('id' => $id)));
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a Category entity.
      *
-     * @Route("/{id}", name="admin_category_delete")
+     * @Route("/{id}", name="admin_shop_category_delete")
      * @Method("DELETE")
      */
-    public function deleteAction(Request $request, $id)
-    {
+    public function deleteAction(Request $request, $id) {
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
@@ -225,7 +246,7 @@ class AdminCategoryController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('admin_category'));
+        return $this->redirect($this->generateUrl('admin_shop_category'));
     }
 
     /**
@@ -233,15 +254,15 @@ class AdminCategoryController extends Controller
      *
      * @param mixed $id The entity id
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
-    private function createDeleteForm($id)
-    {
+    private function createDeleteForm($id) {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_category_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
+                        ->setAction($this->generateUrl('admin_shop_category_delete', array('id' => $id)))
+                        ->setMethod('DELETE')
+                        ->add('submit', 'submit', array('label' => 'Delete'))
+                        ->getForm()
         ;
     }
+
 }

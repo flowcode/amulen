@@ -23,7 +23,7 @@ class AppKernel extends Kernel {
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             /* miweb */
-            new Flowcode\TagBundle\FlowcodeTagBundle(),
+            new Flowcode\ClassificationBundle\FlowcodeClassificationBundle(),
             new Flowcode\NewsBundle\FlowcodeNewsBundle(),
             new Flowcode\PageBundle\FlowcodePageBundle(),
             new Flowcode\MediaBundle\FlowcodeMediaBundle(),

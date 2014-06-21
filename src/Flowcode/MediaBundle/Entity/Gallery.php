@@ -55,7 +55,7 @@ class Gallery {
     private $galleryItems;
 
     /**
-     * @ManyToMany(targetEntity="Flowcode\TagBundle\Entity\Tag")
+     * @ManyToMany(targetEntity="Flowcode\ClassificationBundle\Entity\Tag")
      * @JoinTable(name="media_gallery_tag",
      *      joinColumns={@JoinColumn(name="gallery_id", referencedColumnName="id")},
      *      inverseJoinColumns={@JoinColumn(name="tag_id", referencedColumnName="id")}
@@ -173,10 +173,10 @@ class Gallery {
     /**
      * Add tags
      *
-     * @param \Flowcode\TagBundle\Entity\Tag $tags
+     * @param \Flowcode\ClassificationBundle\Entity\Tag $tags
      * @return Gallery
      */
-    public function addTag(\Flowcode\TagBundle\Entity\Tag $tags) {
+    public function addTag(\Flowcode\ClassificationBundle\Entity\Tag $tags) {
         $this->tags[] = $tags;
 
         return $this;
@@ -185,9 +185,9 @@ class Gallery {
     /**
      * Remove tags
      *
-     * @param \Flowcode\TagBundle\Entity\Tag $tags
+     * @param \Flowcode\ClassificationBundle\Entity\Tag $tags
      */
-    public function removeTag(\Flowcode\TagBundle\Entity\Tag $tags) {
+    public function removeTag(\Flowcode\ClassificationBundle\Entity\Tag $tags) {
         $this->tags->removeElement($tags);
     }
 

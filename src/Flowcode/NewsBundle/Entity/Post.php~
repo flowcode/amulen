@@ -71,7 +71,7 @@ class Post {
     private $image;
 
     /**
-     * @ManyToMany(targetEntity="Flowcode\TagBundle\Entity\Tag")
+     * @ManyToMany(targetEntity="Flowcode\ClassificationBundle\Entity\Tag")
      * @JoinTable(name="news_post_tag",
      *      joinColumns={@JoinColumn(name="post_id", referencedColumnName="id")},
      *      inverseJoinColumns={@JoinColumn(name="tag_id", referencedColumnName="id")}
@@ -216,7 +216,7 @@ class Post {
     /**
      * Add tags
      *
-     * @param \Flowcode\TagBundle\Entity\Tag $tags
+     * @param \Flowcode\ClassificationBundle\Entity\Tag $tags
      * @return Post
      */
     public function addTag($tags) {
@@ -228,9 +228,9 @@ class Post {
     /**
      * Remove tags
      *
-     * @param \Flowcode\TagBundle\Entity\Tag $tags
+     * @param \Flowcode\ClassificationBundle\Entity\Tag $tags
      */
-    public function removeTag(\Flowcode\TagBundle\Entity\Tag $tags) {
+    public function removeTag(\Flowcode\ClassificationBundle\Entity\Tag $tags) {
         $this->tags->removeElement($tags);
     }
 

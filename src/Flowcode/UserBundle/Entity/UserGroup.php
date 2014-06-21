@@ -8,7 +8,7 @@ use FOS\UserBundle\Model\Group as BaseGroup;
 /**
  * UserGroup
  *
- * @ORM\Table(name="fos_group")
+ * @ORM\Table(name="user_group")
  * @ORM\Entity
  */
 class UserGroup extends BaseGroup {
@@ -20,4 +20,14 @@ class UserGroup extends BaseGroup {
      */
     protected $id;
 
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 }
