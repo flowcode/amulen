@@ -70,13 +70,13 @@ class AdminProductController extends Controller {
             $em->flush();
 
             $this->get('session')->getFlashBag()->add(
-                    'success', 'Your changes were saved!'
+                    'success', $this->get('translator')->trans('save_success')
             );
 
             return $this->redirect($this->generateUrl('admin_product_show', array('id' => $entity->getId())));
         } else {
             $this->get('session')->getFlashBag()->add(
-                    'warning', 'Error'
+                    'warning', $this->get('translator')->trans('save_fail')
             );
         }
 

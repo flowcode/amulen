@@ -21,24 +21,27 @@ class AdminCategoryController extends Controller {
     /**
      * Lists all Category entities.
      *
-     * @Route("/", name="admin_project-category")
+     * @Route("/", name="admin_project_category")
      * @Method("GET")
      * @Template()
      */
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('FlowcodeProjectBundle:Category')->findAll();
+        $rootName = $this->container->getParameter('flowcode_project.root_category');
+        $root = $em->getRepository('FlowcodeClassificationBundle:Category')->findOneBy(array("name" => $rootName));
+        $entities = $em->getRepository('FlowcodeClassificationBundle:Category')->getChildren($root);
 
         return array(
             'entities' => $entities,
+            'rootcategory' => $root,
         );
     }
 
     /**
      * Creates a new Category entity.
      *
-     * @Route("/", name="admin_project-category_create")
+     * @Route("/", name="admin_project_category_create")
      * @Method("POST")
      * @Template("FlowcodeProjectBundle:Category:new.html.twig")
      */
@@ -52,7 +55,7 @@ class AdminCategoryController extends Controller {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_project-category_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('admin_project_category_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -69,8 +72,8 @@ class AdminCategoryController extends Controller {
      * @return Form The form
      */
     private function createCreateForm(Category $entity) {
-        $form = $this->createForm(new CategoryType(), $entity, array(
-            'action' => $this->generateUrl('admin_project-category_create'),
+        $form = $this->createForm(new \Flowcode\ClassificationBundle\Form\CategoryType(), $entity, array(
+            'action' => $this->generateUrl('admin_project_category_create'),
             'method' => 'POST',
         ));
 
@@ -78,16 +81,40 @@ class AdminCategoryController extends Controller {
 
         return $form;
     }
+    
+    /**
+     * Select parent.
+     *
+     * @Route("/childrens/{id}", name="admin_project_category_children")
+     * @Method("GET")
+     * @Template()
+     */
+    public function childrensAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $parent = $em->getRepository('FlowcodeClassificationBundle:Category')->findOneBy(array("id" => $id));
+        $childrens = $em->getRepository('FlowcodeClassificationBundle:Category')->getChildren($parent, true);
+
+        return array(
+            'entities' => $childrens,
+            'parent' => $parent,
+        );
+    }
 
     /**
      * Displays a form to create a new Category entity.
      *
-     * @Route("/new", name="admin_project-category_new")
+     * @Route("/new/{parent_id}", name="admin_project_category_new")
      * @Method("GET")
      * @Template()
      */
-    public function newAction() {
+    public function newAction($parent_id) {
+        $em = $this->getDoctrine()->getManager();
+        $parent = $em->getRepository('FlowcodeClassificationBundle:Category')->findOneBy(array("id" => $parent_id));
+        
         $entity = new Category();
+        $entity->setParent($parent);
+        
         $form = $this->createCreateForm($entity);
 
         return array(
@@ -99,14 +126,14 @@ class AdminCategoryController extends Controller {
     /**
      * Finds and displays a Category entity.
      *
-     * @Route("/{id}", name="admin_project-category_show")
+     * @Route("/{id}", name="admin_project_category_show")
      * @Method("GET")
      * @Template()
      */
     public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('FlowcodeProjectBundle:Category')->find($id);
+        $entity = $em->getRepository('FlowcodeClassificationBundle:Category')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Category entity.');
@@ -123,7 +150,7 @@ class AdminCategoryController extends Controller {
     /**
      * Displays a form to edit an existing Category entity.
      *
-     * @Route("/{id}/edit", name="admin_project-category_edit")
+     * @Route("/{id}/edit", name="admin_project_category_edit")
      * @Method("GET")
      * @Template()
      */
@@ -155,7 +182,7 @@ class AdminCategoryController extends Controller {
      */
     private function createEditForm(Category $entity) {
         $form = $this->createForm(new CategoryType(), $entity, array(
-            'action' => $this->generateUrl('admin_project-category_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('admin_project_category_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -167,7 +194,7 @@ class AdminCategoryController extends Controller {
     /**
      * Edits an existing Category entity.
      *
-     * @Route("/{id}", name="admin_project-category_update")
+     * @Route("/{id}", name="admin_project_category_update")
      * @Method("PUT")
      * @Template("FlowcodeProjectBundle:Category:edit.html.twig")
      */
@@ -187,7 +214,7 @@ class AdminCategoryController extends Controller {
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_project-category_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('admin_project_category_edit', array('id' => $id)));
         }
 
         return array(
@@ -200,7 +227,7 @@ class AdminCategoryController extends Controller {
     /**
      * Deletes a Category entity.
      *
-     * @Route("/{id}", name="admin_project-category_delete")
+     * @Route("/{id}", name="admin_project_category_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id) {
@@ -219,7 +246,7 @@ class AdminCategoryController extends Controller {
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('admin_project-category'));
+        return $this->redirect($this->generateUrl('admin_project_category'));
     }
 
     /**
@@ -231,7 +258,7 @@ class AdminCategoryController extends Controller {
      */
     private function createDeleteForm($id) {
         return $this->createFormBuilder()
-                        ->setAction($this->generateUrl('admin_project-category_delete', array('id' => $id)))
+                        ->setAction($this->generateUrl('admin_project_category_delete', array('id' => $id)))
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
                         ->getForm()

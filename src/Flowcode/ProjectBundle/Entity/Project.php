@@ -74,7 +74,7 @@ class Project {
      * @ManyToMany(targetEntity="Flowcode\ClassificationBundle\Entity\Tag")
      * @JoinTable(name="project_tag",
      *      joinColumns={@JoinColumn(name="project_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@JoinColumn(name="tag_id", referencedColumnName="id", unique=true)}
+     *      inverseJoinColumns={@JoinColumn(name="tag_id", referencedColumnName="id")}
      *      )
      * */
     private $tags;
@@ -262,18 +262,6 @@ class Project {
     }
 
     /**
-     * Set category
-     *
-     * @param Flowcode\ClassificationBundle\Entity\Category $category
-     * @return Project
-     */
-    public function setCategory(Flowcode\ClassificationBundle\Entity\Category $category = null) {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
      * Get category
      *
      * @return Flowcode\ClassificationBundle\Entity\Category 
@@ -335,6 +323,28 @@ class Project {
 
     public function __toString() {
         return $this->name;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \Flowcode\ClassificationBundle\Entity\Category $category
+     * @return Project
+     */
+    public function setCategory(\Flowcode\ClassificationBundle\Entity\Category $category = null) {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    public function getImage() {
+        $webPath = "";
+        if (!is_null($this->mediaGallery) && $this->mediaGallery->getGalleryItems()->count() > 0) {
+            $webPath = "/" . $this->getMediaGallery()->getGalleryItems()->first()->getMedia()->getWebPath();
+        } else {
+            $webPath = "http://placehold.it/160";
+        }
+        return $webPath;
     }
 
 }

@@ -1,0 +1,58 @@
+{% extends '::backend.html.twig' %}
+
+{% block body -%}
+<ol class="breadcrumb">
+    <li><a href="{{ path('admin_dashboard') }}">{{ "home"|trans }}</a></li>
+    <li><a href="{{ path('admin_project_dashboard') }}">{{ "projects dashboard"|trans }}</a></li>
+    <li>{{ "projects"|trans }}</li>
+</ol>
+<div class="page-header">
+    <h1>{{ "projects"|trans|title }}</h1>
+    <ul class="list-inline">
+        <li>
+            <a href="{{ path('admin_project_new') }}" class="btn btn-default">
+                {{ "create new"|trans }}
+            </a>
+        </li>
+    </ul>    
+</div>
+<table class="records_list table table-condensed">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>{{"name"|trans}}</th>
+            <th>{{"slug"|trans}}</th>
+            <th>{{"abstract"|trans}}</th>
+            <th>{{"enabled"|trans}}</th>
+            <th>{{"created"|trans}}</th>
+            <th>{{"updated"|trans}}</th>
+            <th>{{"actions"|trans}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('admin_project_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.name }}</td>
+            <td>{{ entity.slug }}</td>
+            <td>{{ entity.abstract }}</td>
+            <td>{{ entity.enabled ? 'yes'|trans : 'no'|trans }}</td>
+            <td>{% if entity.created %}{{ entity.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>{% if entity.updated %}{{ entity.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+            <td>
+                <ul class="list-inline">
+                    <li>
+                        <a href="{{ path('admin_project_show', { 'id': entity.id }) }}">{{ "show"|trans }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_project_edit', { 'id': entity.id }) }}">{{ "edit"|trans }}</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}

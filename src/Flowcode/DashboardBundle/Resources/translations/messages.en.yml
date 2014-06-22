@@ -1,0 +1,6 @@
+## YAML Template.
+---
+
+## messages
+save_success: Chages were saved.
+save_fail: Something goes wrong, please check your data.

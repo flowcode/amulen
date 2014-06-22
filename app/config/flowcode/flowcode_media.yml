@@ -1,0 +1,12 @@
+flowcode_media:
+    media_types: 
+        image:
+            file_extensions:
+                - png
+                - jpg
+                - jpeg
+        video:
+            file_extensions:
+                - mkv
+                - xvid
+                - mp4

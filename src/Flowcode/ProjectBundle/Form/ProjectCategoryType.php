@@ -6,11 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProjectType extends AbstractType {
-
-    function __construct($categorys) {
-        $this->categorys = $categorys;
-    }
+class ProjectCategoryType extends AbstractType {
 
     /**
      * @param FormBuilderInterface $builder
@@ -19,16 +15,8 @@ class ProjectType extends AbstractType {
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
                 ->add('name')
-                ->add('abstract')
-                ->add('description', 'ckeditor')
-                ->add('enabled')
-                ->add('category')
-                ->add('category', 'entity', array(
-                    'class' => 'FlowcodeClassificationBundle:Category',
-                    'choices' => $this->categorys,
-                ))
-                ->add('tags')
-                ->add('mediaGallery')
+                ->add('slug', null, array('read_only' => true))
+                ->add('parent')
         ;
     }
 
@@ -37,7 +25,7 @@ class ProjectType extends AbstractType {
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'data_class' => 'Flowcode\ProjectBundle\Entity\Project'
+            'data_class' => 'Flowcode\ClassificationBundle\Entity\Category'
         ));
     }
 
@@ -45,7 +33,7 @@ class ProjectType extends AbstractType {
      * @return string
      */
     public function getName() {
-        return 'flowcode_projectbundle_project';
+        return 'flowcode_classificationbundle_category';
     }
 
 }

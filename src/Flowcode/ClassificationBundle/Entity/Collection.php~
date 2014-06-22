@@ -202,5 +202,9 @@ class Collection {
     public function getEnabled() {
         return $this->enabled;
     }
+    
+    public function __toString() {
+        return $this->name;
+    }
 
 }

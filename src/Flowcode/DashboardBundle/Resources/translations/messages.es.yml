@@ -4,3 +4,23 @@ News: Noticias
 Pages: Paginas
 Users: Usuarios
 Projects: Proyectos
+
+name: nombre
+Name: Nombre
+actions: acciones
+show: mostrar
+edit: editar
+create new: crear nueva
+previous level: nivel anterior
+add here: agregar aqui
+enabled: habilitado
+Enabled: habilitado
+description: descripcion
+Description: Descripcion
+back to list: volver al listado
+created: creación
+updated: actualización
+
+## messages
+save_success: Los cambios fueron guardados.
+save_fail: Por favor verifique los datos.

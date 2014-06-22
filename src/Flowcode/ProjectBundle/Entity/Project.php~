@@ -261,17 +261,7 @@ class Project {
         return $this->updated;
     }
 
-    /**
-     * Set category
-     *
-     * @param Flowcode\ClassificationBundle\Entity\Category $category
-     * @return Project
-     */
-    public function setCategory(Flowcode\ClassificationBundle\Entity\Category $category = null) {
-        $this->category = $category;
-
-        return $this;
-    }
+    
 
     /**
      * Get category

@@ -1,19 +1,4 @@
 
-# general
-name: nombre
-Name: Nombre
-actions: acciones
-show: mostrar
-edit: editar
-create new: crear nueva
-previous level: nivel anterior
-add here: agregar aqui
-enabled: habilitado
-Enabled: habilitado
-description: descripcion
-Description: Descripcion
-back to list: volver al listado
-
 # products
 price: precio
 Price: Precio

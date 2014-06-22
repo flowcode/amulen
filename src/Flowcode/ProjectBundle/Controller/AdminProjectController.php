@@ -18,13 +18,24 @@ use Flowcode\ProjectBundle\Form\ProjectType;
 class AdminProjectController extends Controller {
 
     /**
-     * Lists all Project entities.
+     * Dashboard of project module.
      *
-     * @Route("/", name="admin_project")
+     * @Route("/dashboard", name="admin_project_dashboard")
      * @Method("GET")
      * @Template()
      */
-    public function indexAction() {
+    public function dashboardAction() {
+        return array();
+    }
+
+    /**
+     * Lists all Project entities.
+     *
+     * @Route("/", name="admin_project_list")
+     * @Method("GET")
+     * @Template()
+     */
+    public function listAction() {
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('FlowcodeProjectBundle:Project')->findAll();
@@ -49,10 +60,30 @@ class AdminProjectController extends Controller {
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
+
+            if (is_null($entity->getMediaGallery())) {
+                /* create media gallery */
+                $mediaGallery = new \Flowcode\MediaBundle\Entity\Gallery();
+                $mediaGallery->setName($entity->getName());
+                $mediaGallery->setEnabled(true);
+                $em->persist($mediaGallery);
+
+                /* set media gallery */
+                $entity->setMediaGallery($mediaGallery);
+            }
+
             $em->flush();
+            $this->get('session')->getFlashBag()->add(
+                    'success', $this->get('translator')->trans('save_success')
+            );
 
             return $this->redirect($this->generateUrl('admin_project_show', array('id' => $entity->getId())));
+        } else {
+            $this->get('session')->getFlashBag()->add(
+                    'warning', $this->get('translator')->trans('save_fail')
+            );
         }
+
 
         return array(
             'entity' => $entity,
@@ -68,7 +99,12 @@ class AdminProjectController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createCreateForm(Project $entity) {
-        $form = $this->createForm(new ProjectType(), $entity, array(
+        $em = $this->getDoctrine()->getManager();
+        $rootName = $this->container->getParameter('flowcode_project.root_category');
+        $root = $em->getRepository('FlowcodeClassificationBundle:Category')->findOneBy(array("name" => $rootName));
+        $entities = $em->getRepository('FlowcodeClassificationBundle:Category')->getChildren($root);
+
+        $form = $this->createForm(new ProjectType($entities), $entity, array(
             'action' => $this->generateUrl('admin_project_create'),
             'method' => 'POST',
         ));
@@ -153,7 +189,11 @@ class AdminProjectController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createEditForm(Project $entity) {
-        $form = $this->createForm(new ProjectType(), $entity, array(
+        $em = $this->getDoctrine()->getManager();
+        $rootName = $this->container->getParameter('flowcode_project.root_category');
+        $root = $em->getRepository('FlowcodeClassificationBundle:Category')->findOneBy(array("name" => $rootName));
+        $entities = $em->getRepository('FlowcodeClassificationBundle:Category')->getChildren($root);
+        $form = $this->createForm(new ProjectType($entities), $entity, array(
             'action' => $this->generateUrl('admin_project_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
@@ -193,6 +233,59 @@ class AdminProjectController extends Controller {
             'entity' => $entity,
             'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+        );
+    }
+
+    /**
+     * Displays a form to create a new Gallery entity.
+     *
+     * @Route("/{id}/addimage", name="admin_project_new_image")
+     * @Method("GET")
+     * @Template()
+     */
+    public function addimageAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $product = $em->getRepository('FlowcodeProjectBundle:Project')->find($id);
+        $gallery = $product->getMediaGallery();
+        $entity = new \Flowcode\MediaBundle\Entity\GalleryItem();
+        $entity->setGallery($gallery);
+        $position = $gallery->getGalleryItems()->count() + 1;
+        $entity->setPosition($position);
+
+        $form = $this->createForm(new \Flowcode\MediaBundle\Form\GalleryItemType(), $entity, array(
+            'action' => $this->generateUrl('admin_galleryitem_create'),
+            'method' => 'POST',
+        ));
+        $form->add('submit', 'submit', array('label' => 'Create'));
+
+        return array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+        );
+    }
+
+    /**
+     * Edit media.
+     *
+     * @Route("/{id}/edit-media", name="admin_project_edit_media")
+     * @Method("GET")
+     * @Template()
+     */
+    public function editMediaAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('FlowcodeProjectBundle:Product')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find Product entity.');
+        }
+
+        $form = $this->createEditGalleryForm($entity->getMediaGallery());
+
+        return array(
+            'entity' => $entity,
+            'form' => $form->createView(),
         );
     }
 
