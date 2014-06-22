@@ -2,20 +2,17 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     
-    # Knp
+    # librarys
     - { resource: knp/knp_paginator.yml }    
-    # Sonata
     - { resource: sonata/sonata_seo.yml }    
-    # Lunetics
     - { resource: lunetics/lunetics_locale.yml }    
-    # stof
     - { resource: stof/stof_doctrine.yml }    
-    # fos
     - { resource: fos/fos_user.yml }
-    # fm
     - { resource: fm/fm_elfinder.yml }    
-    # liip
     - { resource: liip/liip_imagine.yml }
+    
+    # flowcode
+    - { resource: flowcode/flowcode_shop.yml }    
 
 framework:
     #esi:             ~
@@ -143,4 +140,3 @@ ivory_ck_editor:
         default:
             filebrowserBrowseRoute: elfinder
 
-        

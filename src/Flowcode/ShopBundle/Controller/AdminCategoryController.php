@@ -27,8 +27,8 @@ class AdminCategoryController extends Controller {
      */
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
-
-        $root = $em->getRepository('FlowcodeClassificationBundle:Category')->findOneBy(array("name" => "product"));
+        $rootName = $this->container->getParameter('flowcode_shop.root_category');
+        $root = $em->getRepository('FlowcodeClassificationBundle:Category')->findOneBy(array("name" => $rootName));
         $entities = $em->getRepository('FlowcodeClassificationBundle:Category')->getChildren($root);
 
         return array(
@@ -92,7 +92,7 @@ class AdminCategoryController extends Controller {
         $em = $this->getDoctrine()->getManager();
 
         $parent = $em->getRepository('FlowcodeClassificationBundle:Category')->findOneBy(array("id" => $parent_id));
-        
+
         $entity = new Category();
         $entity->setParent($parent);
 
