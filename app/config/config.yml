@@ -12,6 +12,7 @@ imports:
     - { resource: liip/liip_imagine.yml }
     
     # flowcode
+    - { resource: flowcode/flowcode_page.yml }
     - { resource: flowcode/flowcode_shop.yml }
     - { resource: flowcode/flowcode_project.yml }
 

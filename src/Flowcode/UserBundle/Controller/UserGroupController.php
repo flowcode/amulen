@@ -7,27 +7,27 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Flowcode\UserBundle\Entity\User;
-use Flowcode\UserBundle\Form\UserType;
+use Flowcode\UserBundle\Entity\UserGroup;
+use Flowcode\UserBundle\Form\UserGroupType;
 
 /**
- * User controller.
+ * UserGroup controller.
  *
- * @Route("/admin/user")
+ * @Route("/usergroup")
  */
-class AdminUserController extends Controller {
+class UserGroupController extends Controller {
 
     /**
-     * Lists all User entities.
+     * Lists all UserGroup entities.
      *
-     * @Route("/", name="admin_user")
+     * @Route("/", name="admin_usergroup")
      * @Method("GET")
      * @Template()
      */
     public function indexAction() {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('FlowcodeUserBundle:User')->findAll();
+        $entities = $em->getRepository('FlowcodeUserBundle:UserGroup')->findAll();
 
         return array(
             'entities' => $entities,
@@ -35,14 +35,14 @@ class AdminUserController extends Controller {
     }
 
     /**
-     * Creates a new User entity.
+     * Creates a new UserGroup entity.
      *
-     * @Route("/", name="admin_user_create")
+     * @Route("/", name="admin_usergroup_create")
      * @Method("POST")
-     * @Template("FlowcodeUserBundle:User:new.html.twig")
+     * @Template("FlowcodeUserBundle:UserGroup:new.html.twig")
      */
     public function createAction(Request $request) {
-        $entity = new User();
+        $entity = new UserGroup();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -51,7 +51,7 @@ class AdminUserController extends Controller {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_user_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('admin_usergroup_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -61,15 +61,15 @@ class AdminUserController extends Controller {
     }
 
     /**
-     * Creates a form to create a User entity.
+     * Creates a form to create a UserGroup entity.
      *
-     * @param User $entity The entity
+     * @param UserGroup $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(User $entity) {
-        $form = $this->createForm(new UserType(), $entity, array(
-            'action' => $this->generateUrl('admin_user_create'),
+    private function createCreateForm(UserGroup $entity) {
+        $form = $this->createForm(new UserGroupType(), $entity, array(
+            'action' => $this->generateUrl('admin_usergroup_create'),
             'method' => 'POST',
         ));
 
@@ -79,16 +79,14 @@ class AdminUserController extends Controller {
     }
 
     /**
-     * Displays a form to create a new User entity.
+     * Displays a form to create a new UserGroup entity.
      *
-     * @Route("/new", name="admin_user_new")
+     * @Route("/new", name="admin_usergroup_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction() {
-        $userManager = $this->container->get('fos_user.user_manager');
-        $entity = $userManager->createUser();
-        //$entity = new User();
+        $entity = new UserGroup();
         $form = $this->createCreateForm($entity);
 
         return array(
@@ -98,19 +96,19 @@ class AdminUserController extends Controller {
     }
 
     /**
-     * Finds and displays a User entity.
+     * Finds and displays a UserGroup entity.
      *
-     * @Route("/{id}", name="admin_user_show")
+     * @Route("/{id}", name="admin_usergroup_show")
      * @Method("GET")
      * @Template()
      */
     public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('FlowcodeUserBundle:User')->find($id);
+        $entity = $em->getRepository('FlowcodeUserBundle:UserGroup')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+            throw $this->createNotFoundException('Unable to find UserGroup entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -122,19 +120,19 @@ class AdminUserController extends Controller {
     }
 
     /**
-     * Displays a form to edit an existing User entity.
+     * Displays a form to edit an existing UserGroup entity.
      *
-     * @Route("/{id}/edit", name="admin_user_edit")
+     * @Route("/{id}/edit", name="admin_usergroup_edit")
      * @Method("GET")
      * @Template()
      */
     public function editAction($id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('FlowcodeUserBundle:User')->find($id);
+        $entity = $em->getRepository('FlowcodeUserBundle:UserGroup')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+            throw $this->createNotFoundException('Unable to find UserGroup entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -148,15 +146,15 @@ class AdminUserController extends Controller {
     }
 
     /**
-     * Creates a form to edit a User entity.
+     * Creates a form to edit a UserGroup entity.
      *
-     * @param User $entity The entity
+     * @param UserGroup $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(User $entity) {
-        $form = $this->createForm(new UserType(), $entity, array(
-            'action' => $this->generateUrl('admin_user_update', array('id' => $entity->getId())),
+    private function createEditForm(UserGroup $entity) {
+        $form = $this->createForm(new UserGroupType(), $entity, array(
+            'action' => $this->generateUrl('admin_usergroup_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -166,19 +164,19 @@ class AdminUserController extends Controller {
     }
 
     /**
-     * Edits an existing User entity.
+     * Edits an existing UserGroup entity.
      *
-     * @Route("/{id}", name="admin_user_update")
+     * @Route("/{id}", name="admin_usergroup_update")
      * @Method("PUT")
-     * @Template("FlowcodeUserBundle:User:edit.html.twig")
+     * @Template("FlowcodeUserBundle:UserGroup:edit.html.twig")
      */
     public function updateAction(Request $request, $id) {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('FlowcodeUserBundle:User')->find($id);
+        $entity = $em->getRepository('FlowcodeUserBundle:UserGroup')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+            throw $this->createNotFoundException('Unable to find UserGroup entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -186,13 +184,9 @@ class AdminUserController extends Controller {
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            
-            /* get user manager */
-            $userManager = $this->container->get('fos_user.user_manager');
-            //$entity->setPlainPassword("juanma");
-            $userManager->updateUser($entity);
+            $em->flush();
 
-            return $this->redirect($this->generateUrl('admin_user_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('admin_usergroup_edit', array('id' => $id)));
         }
 
         return array(
@@ -203,9 +197,9 @@ class AdminUserController extends Controller {
     }
 
     /**
-     * Deletes a User entity.
+     * Deletes a UserGroup entity.
      *
-     * @Route("/{id}", name="admin_user_delete")
+     * @Route("/{id}", name="admin_usergroup_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id) {
@@ -214,21 +208,21 @@ class AdminUserController extends Controller {
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('FlowcodeUserBundle:User')->find($id);
+            $entity = $em->getRepository('FlowcodeUserBundle:UserGroup')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find User entity.');
+                throw $this->createNotFoundException('Unable to find UserGroup entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('admin_user'));
+        return $this->redirect($this->generateUrl('admin_usergroup'));
     }
 
     /**
-     * Creates a form to delete a User entity by id.
+     * Creates a form to delete a UserGroup entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -236,7 +230,7 @@ class AdminUserController extends Controller {
      */
     private function createDeleteForm($id) {
         return $this->createFormBuilder()
-                        ->setAction($this->generateUrl('admin_user_delete', array('id' => $id)))
+                        ->setAction($this->generateUrl('admin_usergroup_delete', array('id' => $id)))
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
                         ->getForm()

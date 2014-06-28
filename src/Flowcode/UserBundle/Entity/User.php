@@ -20,6 +20,15 @@ class User extends BaseUser {
     protected $id;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Flowcode\UserBundle\Entity\UserGroup")
+     * @ORM\JoinTable(name="user_user_user_group",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="id")}
+     * )
+     */
+    protected $groups;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, nullable=true)
@@ -113,5 +122,6 @@ class User extends BaseUser {
     public function getUpdated() {
         return $this->updated;
     }
+
 
 }

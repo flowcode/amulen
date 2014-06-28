@@ -1,0 +1,59 @@
+{% extends '::backend.html.twig' %}
+
+{% block body -%}
+<div class="page-header">
+    <h1>{{ "blocks"|trans|title }}
+        <small>{{ page.name }}</small>
+    </h1>
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+            {{ "create new"|trans }}
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li>
+                <a href="{{ path('admin_page_block_new', {'page_id': page.id, 'type' : 'type_text'}) }}">
+                {{ "plain text"|trans }}
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('admin_page_block_new', {'page_id': page.id, 'type' : 'type_html'}) }}">
+                {{ "html"|trans }}
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<table class="records_list table table-condensed">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>{{ "Name"|trans }}</th>
+            <th>{{ "Type"|trans }}</th>
+            <th>{{ "Actions"|trans }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('admin_page_block_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.name }}</td>
+            <td>{{ entity.type }}</td>
+            <td>
+                <ul class="list-inline">
+                    <li>
+                        <a href="{{ path('admin_page_block_show', { 'id': entity.id }) }}">{{ "show"|trans }}</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_page_block_edit', { 'id': entity.id }) }}">{{ "edit"|trans }}</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+    {% endblock %}

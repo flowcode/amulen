@@ -91,7 +91,10 @@ class AdminBlockController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createCreateForm(Block $entity) {
-        $form = $this->createForm(new BlockType(), $entity, array(
+        
+        $types = $this->container->getParameter('flowcode_page.block_types');
+        $class = $types["type_text"]["class_type"];
+        $form = $this->createForm(new $class(), $entity, array(
             'action' => $this->generateUrl('block_create'),
             'method' => 'POST',
         ));

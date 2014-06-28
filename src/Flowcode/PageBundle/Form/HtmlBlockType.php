@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class BlockType extends AbstractType {
+class HtmlBlockType extends AbstractType {
 
     protected $availableTypes;
 
@@ -18,9 +18,11 @@ class BlockType extends AbstractType {
 
         $builder
                 ->add('name')
-                ->add('content')
-                ->add('page')
-                ->add('type', 'hidden')
+                ->add('content', 'ckeditor')
+                ->add('page', null, array("read_only" => true))
+                ->add('type', 'hidden', array(
+                    'data' => 'type_html',
+                ))
         ;
     }
 

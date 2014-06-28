@@ -18,6 +18,11 @@ fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /admin/profile
     
+fos_user_group:
+    resource: "@FOSUserBundle/Resources/config/routing/group.xml"
+    prefix: /admin/group
+    
+    
 flowcode_dashboard:
     resource: "@FlowcodeDashboardBundle/Resources/config/routing.yml"
     prefix:   /    

@@ -1,30 +1,30 @@
-{% extends '::backend.html.twig' %}
+{% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>BlockType list</h1>
+    <h1>UserGroup list</h1>
 
     <table class="records_list">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Name</th>
-                <th>Description</th>
+                <th>Roles</th>
+                <th>Id</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('blocktype_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.name }}</td>
-                <td>{{ entity.description }}</td>
+                <td><a href="{{ path('admin_usergroup_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+                <td>{{ entity.roles }}</td>
+                <td>{{ entity.id }}</td>
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('blocktype_show', { 'id': entity.id }) }}">show</a>
+                        <a href="{{ path('admin_usergroup_show', { 'id': entity.id }) }}">show</a>
                     </li>
                     <li>
-                        <a href="{{ path('blocktype_edit', { 'id': entity.id }) }}">edit</a>
+                        <a href="{{ path('admin_usergroup_edit', { 'id': entity.id }) }}">edit</a>
                     </li>
                 </ul>
                 </td>
@@ -35,7 +35,7 @@
 
         <ul>
         <li>
-            <a href="{{ path('blocktype_new') }}">
+            <a href="{{ path('admin_usergroup_new') }}">
                 Create a new entry
             </a>
         </li>

@@ -13,7 +13,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="page_block")
  * @ORM\Entity(repositoryClass="BlockRepository")
  */
-class Block implements \Gedmo\Translatable\Translatable{
+class Block implements \Gedmo\Translatable\Translatable {
 
     /**
      * @var integer
@@ -46,10 +46,11 @@ class Block implements \Gedmo\Translatable\Translatable{
     private $page;
 
     /**
-     * @ManyToOne(targetEntity="BlockType", inversedBy="blocks")
-     * @JoinColumn(name="block_type_id", referencedColumnName="id")
-     * */
-    private $blockType;
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=255)
+     */
+    private $type;
 
     /**
      * @Gedmo\Locale
@@ -151,33 +152,33 @@ class Block implements \Gedmo\Translatable\Translatable{
         return $this->page;
     }
 
-    /**
-     * Set blockType
-     *
-     * @param \Flowcode\PageBundle\Entity\BlockType $blockType
-     * @return Block
-     */
-    public function setBlockType(\Flowcode\PageBundle\Entity\BlockType $blockType = null) {
-        $this->blockType = $blockType;
-
-        return $this;
-    }
-
-    /**
-     * Get blockType
-     *
-     * @return \Flowcode\PageBundle\Entity\BlockType 
-     */
-    public function getBlockType() {
-        return $this->blockType;
-    }
-
     public function __toString() {
         return $this->name;
     }
 
     public function setTranslatableLocale($locale) {
         $this->locale = $locale;
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return Block
+     */
+    public function setType($type) {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType() {
+        return $this->type;
     }
 
 }

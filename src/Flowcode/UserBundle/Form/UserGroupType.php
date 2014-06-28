@@ -1,12 +1,12 @@
 <?php
 
-namespace Flowcode\PageBundle\Form;
+namespace Flowcode\UserBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class BlockTypeType extends AbstractType
+class UserGroupType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -16,7 +16,7 @@ class BlockTypeType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('description')
+            ->add('roles')
         ;
     }
     
@@ -26,7 +26,7 @@ class BlockTypeType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Flowcode\PageBundle\Entity\BlockType'
+            'data_class' => 'Flowcode\UserBundle\Entity\UserGroup'
         ));
     }
 
@@ -35,6 +35,6 @@ class BlockTypeType extends AbstractType
      */
     public function getName()
     {
-        return 'flowcode_pagebundle_blocktype';
+        return 'flowcode_userbundle_usergroup';
     }
 }

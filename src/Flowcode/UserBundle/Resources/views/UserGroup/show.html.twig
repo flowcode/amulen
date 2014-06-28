@@ -1,33 +1,33 @@
-{% extends '::backend.html.twig' %}
+{% extends '::base.html.twig' %}
 
 {% block body -%}
-    <h1>BlockType</h1>
+    <h1>UserGroup</h1>
 
     <table class="record_properties">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
             <tr>
                 <th>Name</th>
                 <td>{{ entity.name }}</td>
             </tr>
             <tr>
-                <th>Description</th>
-                <td>{{ entity.description }}</td>
+                <th>Roles</th>
+                <td>{{ entity.roles }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
             </tr>
         </tbody>
     </table>
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('blocktype') }}">
+        <a href="{{ path('admin_usergroup') }}">
             Back to the list
         </a>
     </li>
     <li>
-        <a href="{{ path('blocktype_edit', { 'id': entity.id }) }}">
+        <a href="{{ path('admin_usergroup_edit', { 'id': entity.id }) }}">
             Edit
         </a>
     </li>

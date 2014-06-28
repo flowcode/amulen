@@ -1,16 +1,15 @@
 {% extends '::backend.html.twig' %}
 
 {% block body -%}
-    <h1>User edit</h1>
+    <h1>Block creation</h1>
 
-    {{ form(edit_form, { 'style': 'horizontal' }) }}
+    {{ form(form, { 'style':'horizontal'}) }}
 
         <ul class="record_actions">
     <li>
-        <a href="{{ path('admin_user') }}">
+        <a href="{{ path('block') }}">
             Back to the list
         </a>
     </li>
-    <li>{{ form(delete_form) }}</li>
 </ul>
 {% endblock %}
