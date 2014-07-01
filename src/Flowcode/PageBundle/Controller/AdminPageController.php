@@ -111,7 +111,6 @@ class AdminPageController extends Controller {
      */
     public function showAction($id) {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('FlowcodePageBundle:Page')->find($id);
 
         if (!$entity) {
@@ -266,12 +265,13 @@ class AdminPageController extends Controller {
     /**
      * Creates a new Block entity.
      *
-     * @Route("/block", name="admin_page_block_create")
+     * @Route("/block/{type}", name="admin_page_block_create")
      * @Method("POST")
      * @Template("FlowcodePageBundle:AdminPage:new_block.html.twig")
      */
-    public function createBlockAction(Request $request) {
+    public function createBlockAction(Request $request, $type) {
         $entity = new Block();
+        $entity->setType($type);
         $form = $this->createBlockCreateForm($entity);
         $form->handleRequest($request);
 
@@ -306,7 +306,7 @@ class AdminPageController extends Controller {
         $class = $types[$entity->getType()]["class_type"];
 
         $form = $this->createForm(new $class(), $entity, array(
-            'action' => $this->generateUrl('admin_page_block_create'),
+            'action' => $this->generateUrl('admin_page_block_create', array("type" => $entity->getType())),
             'method' => 'POST',
         ));
 
