@@ -340,9 +340,9 @@ class AdminPageController extends Controller {
     /**
      * Finds and displays a Block entity.
      *
-     * @Route("/{id}", name="admin_page_block_show")
+     * @Route("/block/{id}", name="admin_page_block_show")
      * @Method("GET")
-     * @Template()
+     * @Template("FlowcodePageBundle:AdminPage:show_block.html.twig")
      */
     public function showBlockAction($id) {
         $em = $this->getDoctrine()->getManager();
@@ -364,9 +364,9 @@ class AdminPageController extends Controller {
     /**
      * Displays a form to edit an existing Block entity.
      *
-     * @Route("/{id}/edit", name="admin_page_block_edit")
+     * @Route("/block/{id}/edit", name="admin_page_block_edit")
      * @Method("GET")
-     * @Template()
+     * @Template("FlowcodePageBundle:AdminPage:edit_block.html.twig")
      */
     public function editBlockAction($id) {
         $em = $this->getDoctrine()->getManager();
@@ -377,8 +377,8 @@ class AdminPageController extends Controller {
             throw $this->createNotFoundException('Unable to find Block entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createBlockEditForm($entity);
+        $deleteForm = $this->createBlockDeleteForm($id);
 
         return array(
             'entity' => $entity,
@@ -408,7 +408,7 @@ class AdminPageController extends Controller {
     /**
      * Edits an existing Block entity.
      *
-     * @Route("/{id}", name="admin_page_block_update")
+     * @Route("/block/{id}", name="admin_page_block_update")
      * @Method("PUT")
      * @Template("FlowcodePageBundle:Block:edit.html.twig")
      */
@@ -441,7 +441,7 @@ class AdminPageController extends Controller {
     /**
      * Deletes a Block entity.
      *
-     * @Route("/{id}", name="admin_page_block_delete")
+     * @Route("/block/{id}", name="admin_page_block_delete")
      * @Method("DELETE")
      */
     public function deleteBlockAction(Request $request, $id) {
