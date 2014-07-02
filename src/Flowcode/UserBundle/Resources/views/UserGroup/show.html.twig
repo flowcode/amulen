@@ -1,7 +1,7 @@
 {% extends '::base.html.twig' %}
 
-{% block body -%}
-    <h1>UserGroup</h1>
+{% block body %}
+    <h1>User Group</h1>
 
     <table class="record_properties">
         <tbody>
@@ -11,7 +11,15 @@
             </tr>
             <tr>
                 <th>Roles</th>
-                <td>{{ entity.roles }}</td>
+                <td>
+                    {%if entity.roles is defined%}
+                        {%for rol in entity.roles%}
+                            {{rol}}
+                        {%endfor%}
+                    {%else%}
+                        {{"Sin roles definidos."}}
+                    {%endif%}
+                </td>
             </tr>
             <tr>
                 <th>Id</th>

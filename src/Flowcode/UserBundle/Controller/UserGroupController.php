@@ -13,7 +13,7 @@ use Flowcode\UserBundle\Form\UserGroupType;
 /**
  * UserGroup controller.
  *
- * @Route("/usergroup")
+ * @Route("/admin/usergroup")
  */
 class UserGroupController extends Controller {
 
@@ -34,6 +34,24 @@ class UserGroupController extends Controller {
         );
     }
 
+    /**
+     * Displays a form to create a new UserGroup entity.
+     *
+     * @Route("/new", name="admin_usergroup_new")
+     * @Method("GET")
+     * @Template("FlowcodeUserBundle:UserGroup:new.html.twig")
+     */
+    public function newAction() {
+        
+        $viewBag = array();
+        
+        $entity = new UserGroup();
+        $viewBag['entity'] = $entity;
+        $viewBag['form'] = $this->createCreateForm($entity)->createView();
+        
+        return $viewBag;
+    }
+    
     /**
      * Creates a new UserGroup entity.
      *
@@ -59,42 +77,7 @@ class UserGroupController extends Controller {
             'form' => $form->createView(),
         );
     }
-
-    /**
-     * Creates a form to create a UserGroup entity.
-     *
-     * @param UserGroup $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(UserGroup $entity) {
-        $form = $this->createForm(new UserGroupType(), $entity, array(
-            'action' => $this->generateUrl('admin_usergroup_create'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new UserGroup entity.
-     *
-     * @Route("/new", name="admin_usergroup_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction() {
-        $entity = new UserGroup();
-        $form = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView(),
-        );
-    }
-
+    
     /**
      * Finds and displays a UserGroup entity.
      *
@@ -237,4 +220,21 @@ class UserGroupController extends Controller {
         ;
     }
 
+    /**
+     * Creates a form to create a UserGroup entity.
+     *
+     * @param UserGroup $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createCreateForm(UserGroup $entity) {
+        $form = $this->createForm(new UserGroupType(), $entity, array(
+            'action' => $this->generateUrl('admin_usergroup_create'),
+            'method' => 'POST',
+        ));
+
+        $form->add('submit', 'submit', array('label' => 'Create'));
+
+        return $form;
+    }
 }
