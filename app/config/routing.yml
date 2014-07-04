@@ -73,7 +73,7 @@ flowcode_user:
     resource: "@FlowcodeUserBundle/Controller/"
     type:     annotation
     prefix:   /    
-    
+
 flowcode_demo:
     resource: "@FlowcodeDemoBundle/Controller/"
     type:     annotation

@@ -1,13 +1,10 @@
+# classification
+classification: clasificación
+tag: etiqueta
+tags: etiquetas
 
-# products
-price: precio
-Price: Precio
-yes: si
-products: productos
-Products: Productos
-Product: Producto
-product: producto
-product categorys: categorias de productos
-new product: nuevo producto
-category: categorias
-Category: Categorias
+category: categoría
+categorys: categorías
+
+collection: colección
+collections: colecciones

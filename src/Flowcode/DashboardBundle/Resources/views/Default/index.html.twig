@@ -41,11 +41,25 @@
                     {{ 'Users'|trans }}
                 </a>
             </div>
+            <div class="col-sm-6 tile">
+                <a class="btn btn-primary btn-block" href="{{ url('admin_classification') }}">
+                    <div><i class="glyphicon glyphicon-tags"></i></div>
+                    {{ 'Classification'|trans }}
+                </a>
+            </div>
         </div>
     </div>
     <div class="col-sm-7">
-        <span>{{ 'welcome'|trans }}</span>
-
+        <div>
+            <span></span>
+        </div>
+        <div class="jumbotron">
+            <h2>{{ 'welcome'|trans|capitalize }}</h2>
+            <p>{{'Today is'|trans}} {{ datime }}</p>
+        </div>
+        <div>
+            <h3>Lastest news</h3>
+        </div>
     </div>
 </div>
 
