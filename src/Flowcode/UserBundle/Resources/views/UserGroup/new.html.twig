@@ -1,15 +1,24 @@
-{#% extends '::base.html.twig' %#}
+{% extends '::base.html.twig' %}
 
 {% block body %}
     <h1>User Group creation</h1>
 
     {{ form(form) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_usergroup') }}">
-            Back to the list
-        </a>
-    </li>
-</ul>
+    
+    {%if roles is defined %}
+    <select multiple>
+        {%for rol,rol_name in roles%}
+            <option value="{{rol}}">{{rol_name}}</option>
+        {%endfor%}
+    </select>
+    {%endif%}
+    
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('admin_usergroup') }}">
+                Back to the list
+            </a>
+        </li>
+    </ul>
+            
 {% endblock %}

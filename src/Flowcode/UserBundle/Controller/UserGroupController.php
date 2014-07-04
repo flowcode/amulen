@@ -46,8 +46,10 @@ class UserGroupController extends Controller {
         $viewBag = array();
         
         $entity = new UserGroup();
-        $viewBag['entity'] = $entity;
+        $entity->setRoles($this->get('flowcode.security.roles')->getRoles());
+        
         $viewBag['form'] = $this->createCreateForm($entity)->createView();
+        $viewBag ['chan'] = var_dump($this->get('flowcode.security.roles')->getRoles());
         
         return $viewBag;
     }
@@ -227,12 +229,21 @@ class UserGroupController extends Controller {
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(UserGroup $entity) {
+    private function createCreateForm(UserGroup $entity) 
+    {
         $form = $this->createForm(new UserGroupType(), $entity, array(
             'action' => $this->generateUrl('admin_usergroup_create'),
             'method' => 'POST',
         ));
-
+        
+        $form->add( 'roles', 'choice', array( 
+                    'multiple' => true,
+                    'label' => 'Roles',
+                    'choices' => $entity->getRoles(),
+                    'required' => true,
+                    'mapped' => false
+                ));
+        
         $form->add('submit', 'submit', array('label' => 'Create'));
 
         return $form;

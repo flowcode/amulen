@@ -8,7 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class UserGroupType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -16,7 +16,6 @@ class UserGroupType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('roles')
         ;
     }
     
