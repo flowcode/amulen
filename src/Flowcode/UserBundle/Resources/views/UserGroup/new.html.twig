@@ -3,7 +3,10 @@
 {% block body %}
     <h1>User Group creation</h1>
 
-    {{ form(form) }}
+    {%if form is defined%}
+        {{ form(form) }}
+    {%endif%}
+    
     
     {%if roles is defined %}
     <select multiple>

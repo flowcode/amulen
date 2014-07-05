@@ -19,11 +19,14 @@
             <tr>
                 <td><a href="{{ path('admin_usergroup_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
                 <td>
-                    {%if entities.roles is defined%}
-                        {%for rol in entities.roles%}
+                    {%if entity.roles is defined%}
+                        {%for rol in entity.roles%}
                             {{ rol }}
+                            {%if not loop.last%}
+                                ,
+                            {%endif%}
                         {%endfor%}
-                        {%else%}
+                    {%else%}
                             {{"Sin roles definidos"}}
                     {%endif%}
                 </td>

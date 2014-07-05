@@ -11,6 +11,9 @@ class Roles {
    
     private $roles;
 
+    /**
+     * @param array() $hierarchy The rol hierarchy declared in config.yml
+     */
     public function __construct($hierarchy = array()) {
         $this->roles = $this->setRoles($hierarchy);
     }
@@ -40,7 +43,7 @@ class Roles {
                     $name .= $part . ' ';
                 }
                 
-                $roles[] = $name;
+                $roles[$haystack] = $name;
             }
         }
         
@@ -54,5 +57,30 @@ class Roles {
      */
     public function getRoles(){
         return $this->roles;
+    }
+
+    /**
+     * Traducir Roles. Dado un array que contiene una lista de roles, pasa dicha
+     * lista a la representacion amigable al usuario.
+     *
+     * @param array() $roles
+     * @return array()
+     */    
+    public function traducirRoles(array $roles)
+    {
+        $rolesTraducidos = array();
+        
+        foreach ($this->getRoles() as $key => $value)
+        {
+            foreach ($roles as $rol)
+            {
+                if ($rol === $key)
+                {
+                    $rolesTraducidos[] = $value;
+                    break;
+                }
+            }
+        }
+        return $rolesTraducidos;
     }
 }

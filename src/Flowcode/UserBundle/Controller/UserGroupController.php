@@ -29,6 +29,11 @@ class UserGroupController extends Controller {
 
         $entities = $em->getRepository('FlowcodeUserBundle:UserGroup')->findAll();
 
+        foreach ($entities as $entity)
+        {
+            $entity->setRoles($this->get('flowcode.security.roles')->traducirRoles($entity->getRoles()));
+        }
+        
         return array(
             'entities' => $entities,
         );
@@ -44,12 +49,8 @@ class UserGroupController extends Controller {
     public function newAction() {
         
         $viewBag = array();
-        
         $entity = new UserGroup();
-        $entity->setRoles($this->get('flowcode.security.roles')->getRoles());
-        
         $viewBag['form'] = $this->createCreateForm($entity)->createView();
-        $viewBag ['chan'] = var_dump($this->get('flowcode.security.roles')->getRoles());
         
         return $viewBag;
     }
@@ -62,22 +63,21 @@ class UserGroupController extends Controller {
      * @Template("FlowcodeUserBundle:UserGroup:new.html.twig")
      */
     public function createAction(Request $request) {
+        
         $entity = new UserGroup();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid()) 
+        {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($form->getData());
             $em->flush();
 
             return $this->redirect($this->generateUrl('admin_usergroup_show', array('id' => $entity->getId())));
         }
-
-        return array(
-            'entity' => $entity,
-            'form' => $form->createView(),
-        );
+        
+        return array('form' => $form->createView());
     }
     
     /**
@@ -99,7 +99,9 @@ class UserGroupController extends Controller {
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity' => $entity,
+            'id' => $entity->getId(),
+            'name' => $entity->getName(),
+            'roles' => $this->get('flowcode.security.roles')->traducirRoles($entity->getRoles()),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -112,6 +114,7 @@ class UserGroupController extends Controller {
      * @Template()
      */
     public function editAction($id) {
+        
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('FlowcodeUserBundle:UserGroup')->find($id);
@@ -143,8 +146,16 @@ class UserGroupController extends Controller {
             'method' => 'PUT',
         ));
 
+        $form->add('roles', 
+              'choice', 
+               array(
+                    'choices'   => $this->get('flowcode.security.roles')->getRoles(),
+                    'multiple'  => true,
+                    'label' => 'Roles'
+                    )
+             );
         $form->add('submit', 'submit', array('label' => 'Update'));
-
+        
         return $form;
     }
 
@@ -214,12 +225,13 @@ class UserGroupController extends Controller {
      * @return \Symfony\Component\Form\Form The form
      */
     private function createDeleteForm($id) {
-        return $this->createFormBuilder()
+        
+        $form = $this->createFormBuilder()
                         ->setAction($this->generateUrl('admin_usergroup_delete', array('id' => $id)))
                         ->setMethod('DELETE')
                         ->add('submit', 'submit', array('label' => 'Delete'))
-                        ->getForm()
-        ;
+                        ->getForm();
+        return $form;
     }
 
     /**
@@ -231,21 +243,20 @@ class UserGroupController extends Controller {
      */
     private function createCreateForm(UserGroup $entity) 
     {
-        $form = $this->createForm(new UserGroupType(), $entity, array(
-            'action' => $this->generateUrl('admin_usergroup_create'),
-            'method' => 'POST',
-        ));
-        
-        $form->add( 'roles', 'choice', array( 
-                    'multiple' => true,
-                    'label' => 'Roles',
-                    'choices' => $entity->getRoles(),
-                    'required' => true,
-                    'mapped' => false
-                ));
-        
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $options = array ('action' => $this->generateUrl('admin_usergroup_create'), 
+                          'method' => 'POST'
+                         );
 
+        $form = $this->createForm(new UserGroupType(), $entity, $options);
+        $form->add('roles', 
+              'choice', 
+               array(
+                    'choices'   => $this->get('flowcode.security.roles')->getRoles(),
+                    'multiple'  => true,
+                    'label' => 'Roles'
+                    )
+             );
+            
         return $form;
     }
 }

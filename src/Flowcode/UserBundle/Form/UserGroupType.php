@@ -10,13 +10,13 @@ class UserGroupType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
-     * @param array $options
+     * @param array() $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name')
-        ;
+            ->add('name') 
+            ->add('submit', 'submit', array('label' => 'Create'));
     }
     
     /**
@@ -28,7 +28,7 @@ class UserGroupType extends AbstractType
             'data_class' => 'Flowcode\UserBundle\Entity\UserGroup'
         ));
     }
-
+    
     /**
      * @return string
      */

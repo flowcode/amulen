@@ -7,13 +7,13 @@
         <tbody>
             <tr>
                 <th>Name</th>
-                <td>{{ entity.name }}</td>
+                <td>{{ name }}</td>
             </tr>
             <tr>
                 <th>Roles</th>
                 <td>
-                    {%if entity.roles is defined%}
-                        {%for rol in entity.roles%}
+                    {%if roles is defined%}
+                        {%for rol in roles%}
                             {{rol}}
                         {%endfor%}
                     {%else%}
@@ -23,7 +23,7 @@
             </tr>
             <tr>
                 <th>Id</th>
-                <td>{{ entity.id }}</td>
+                <td>{{ id }}</td>
             </tr>
         </tbody>
     </table>
@@ -35,7 +35,7 @@
         </a>
     </li>
     <li>
-        <a href="{{ path('admin_usergroup_edit', { 'id': entity.id }) }}">
+        <a href="{{ path('admin_usergroup_edit', { 'id': id }) }}">
             Edit
         </a>
     </li>
