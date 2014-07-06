@@ -34,6 +34,18 @@ class AdminMediaController extends Controller {
     /**
      * Lists all Media entities.
      *
+     * @Route("/browser", name="admin_media_browser")
+     * @Method("GET")
+     * @Template()
+     */
+    public function browserAction() {
+
+        return array();
+    }
+    
+    /**
+     * Lists all Media entities.
+     *
      * @Route("/", name="admin_media")
      * @Method("GET")
      * @Template()

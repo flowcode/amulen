@@ -1,7 +1,13 @@
 {% extends 'FlowcodeShopBundle::shop.html.twig' %}
 
+{% block stylesheets %}
+    <link href="{{ asset('bundles/flowcodeshop/css/lightbox.css')}}" rel="stylesheet" />
+    {{ parent() }}
+{% endblock %}
+
+
 {% block products -%}
-<h1>{{ entity.name }}</h1>
+<h2>{{ entity.name }}</h2>
 <div>{{ entity.description }}</div>
 <div class="row">
     <div class="col-sm-6">
@@ -13,10 +19,17 @@
                 <div>
                     {{ entity.content|raw }}
                 </div>
-                <div>
-                    ${{ entity.price }}
+            </div>
+        </div>
+        <div class="well">
+            <div class="row">
+        {% for galleryItem in entity.getMediaGallery.getGalleryItems %}
+                <div class="col-sm-4">
+                    <a href="/{{ galleryItem.media.getWebPath }}" class="thumbnail" data-lightbox="roadtrip">
+                        <img src="/{{ galleryItem.media.getWebPath }}" class="img-responsive">
+                    </a>
                 </div>
-                <a href="#" class="btn btn-primary btn-lg" >Add to cart</a>
+        {% endfor %}
             </div>
         </div>
     </div>
@@ -26,4 +39,9 @@
         Back to the list
     </a>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/flowcodeshop/js/lightbox.min.js')}}"></script>
 {% endblock %}

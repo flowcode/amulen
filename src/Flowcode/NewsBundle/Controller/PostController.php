@@ -68,4 +68,13 @@ class PostController extends Controller {
         );
     }
 
+    public function lastsAction() {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('FlowcodeNewsBundle:Post')->findBy(array(), null, 5);
+
+        return $this->render(
+                        'FlowcodeNewsBundle:Post:lastsWidget.html.twig', array('entities' => $entities)
+        );
+    }
+
 }

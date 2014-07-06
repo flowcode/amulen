@@ -26,7 +26,9 @@ body{
     height: 150px;
     color: #999;
 }
-
+.container{
+    max-width: 950px;
+}
 .title{
     font-family: "PT Banana Split";
     font-size: 38px;

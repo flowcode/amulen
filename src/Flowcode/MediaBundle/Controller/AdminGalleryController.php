@@ -2,13 +2,16 @@
 
 namespace Flowcode\MediaBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Flowcode\MediaBundle\Entity\Gallery;
+use Flowcode\MediaBundle\Entity\GalleryItem;
+use Flowcode\MediaBundle\Form\GalleryItemType;
+use Flowcode\MediaBundle\Form\GalleryType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Flowcode\MediaBundle\Entity\Gallery;
-use Flowcode\MediaBundle\Form\GalleryType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Gallery controller.
@@ -31,6 +34,27 @@ class AdminGalleryController extends Controller {
 
         return array(
             'entities' => $entities,
+        );
+    }
+
+    /**
+     * Lists all Gallery items.
+     *
+     * @Route("/{id}/items", name="admin_gallery_items")
+     * @Method("GET")
+     * @Template()
+     */
+    public function itemsAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $gallery = $em->getRepository('FlowcodeMediaBundle:Gallery')->find($id);
+
+        if (!$gallery) {
+            throw $this->createNotFoundException('Unable to find Gallery entity.');
+        }
+
+        return array(
+            'gallery' => $gallery,
+            'items' => $gallery->getGalleryItems(),
         );
     }
 
@@ -65,7 +89,7 @@ class AdminGalleryController extends Controller {
      *
      * @param Gallery $entity The entity
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createCreateForm(Gallery $entity) {
         $form = $this->createForm(new GalleryType(), $entity, array(
@@ -150,7 +174,7 @@ class AdminGalleryController extends Controller {
      *
      * @param Gallery $entity The entity
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createEditForm(Gallery $entity) {
         $form = $this->createForm(new GalleryType(), $entity, array(
@@ -226,7 +250,7 @@ class AdminGalleryController extends Controller {
      *
      * @param mixed $id The entity id
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createDeleteForm($id) {
         return $this->createFormBuilder()
@@ -237,5 +261,147 @@ class AdminGalleryController extends Controller {
         ;
     }
 
+    /**
+     * Displays a form to create a new Gallery entity.
+     *
+     * @Route("/{id}/item/remove", name="admin_gallery_item_remove")
+     */
+    public function removeitemAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $galleryItem = $em->getRepository('FlowcodeMediaBundle:GalleryItem')->find($id);
+
+        $gallery = $galleryItem->getGallery();
+
+        $em->remove($galleryItem);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('admin_gallery_items', array("id" => $gallery->getId())));
+    }
+
+    /**
+     * Displays a form to create a new Gallery entity.
+     *
+     * @Route("/{id}/item/new", name="admin_gallery_item_new")
+     * @Method("GET")
+     * @Template()
+     */
+    public function additemAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $gallery = $em->getRepository('FlowcodeMediaBundle:Gallery')->find($id);
+        $entity = new GalleryItem();
+        $entity->setGallery($gallery);
+        $position = $gallery->getGalleryItems()->count() + 1;
+        $entity->setPosition($position);
+
+        $form = $this->createForm(new GalleryItemType(), $entity, array(
+            'action' => $this->generateUrl('admin_gallery_item_create'),
+            'method' => 'POST',
+        ));
+        $form->add('submit', 'submit', array('label' => 'Create'));
+
+        return array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+        );
+    }
+
+    /**
+     * Creates a new Media entity.
+     *
+     * @Route("/item", name="admin_gallery_item_create")
+     * @Method("POST")
+     * @Template("FlowcodeMediaBundle:Gallery:additem.html.twig")
+     */
+    public function createMediaAction(Request $request) {
+        $entity = new \Flowcode\MediaBundle\Entity\GalleryItem();
+
+        $form = $this->createForm(new GalleryItemType(), $entity, array(
+            'action' => $this->generateUrl('admin_gallery_item_create'),
+            'method' => 'POST',
+        ));
+        $form->add('submit', 'submit', array('label' => 'Create'));
+
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('admin_gallery_items', array('id' => $entity->getGallery()->getId())));
+        }
+
+        return array(
+            'entity' => $entity,
+            'form' => $form->createView(),
+        );
+    }
+
+    /**
+     * Displays a form to edit an existing GalleryItem entity.
+     *
+     * @Route("/item/{id}/edit", name="admin_gallery_item_edit")
+     * @Method("GET")
+     * @Template()
+     */
+    public function editItemAction($id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('FlowcodeMediaBundle:GalleryItem')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find GalleryItem entity.');
+        }
+
+        $editForm = $this->createForm(new GalleryItemType(), $entity, array(
+            'action' => $this->generateUrl('admin_gallery_item_update', array("id" => $entity->getId())),
+            'method' => 'PUT',
+        ));
+        $editForm->add('submit', 'submit', array('label' => 'Update'));
+
+        $deleteForm = $this->createDeleteForm($id);
+
+        return array(
+            'entity' => $entity,
+            'form' => $editForm->createView(),
+        );
+    }
+
+    /**
+     * Edits an existing GalleryItem entity.
+     *
+     * @Route("/item/{id}", name="admin_gallery_item_update")
+     * @Method("PUT")
+     * @Template("FlowcodeMediaBundle:AdminGallery:editItem.html.twig")
+     */
+    public function updateItemAction(Request $request, $id) {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('FlowcodeMediaBundle:GalleryItem')->find($id);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find GalleryItem entity.');
+        }
+
+        $editForm = $this->createForm(new GalleryItemType(), $entity, array(
+            'action' => $this->generateUrl('admin_gallery_item_update', array("id" => $entity->getId())),
+            'method' => 'PUT',
+        ));
+        $editForm->add('submit', 'submit', array('label' => 'Update'));
+        $editForm->handleRequest($request);
+
+        if ($editForm->isValid()) {
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('admin_gallery_items', array('id' => $entity->getGallery()->getId())));
+        }
+
+        return array(
+            'entity' => $entity,
+            'form' => $editForm->createView(),
+        );
+    }
 
 }

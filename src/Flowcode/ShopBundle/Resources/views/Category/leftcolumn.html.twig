@@ -2,7 +2,7 @@
     {% for entity in entities %}
     <li class="list-group-item">
         <span class="badge"></span>
-        <a href="{{ path('category_show', { 'id': entity.id }) }}">{{ entity.name }}</a>
+        <a href="{{ path('product_by_category', { 'slug': entity.slug }) }}">{{ entity.name }}</a>
     </li>
     {% endfor %}
 </ul>

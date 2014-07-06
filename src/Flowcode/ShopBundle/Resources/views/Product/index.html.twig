@@ -2,7 +2,7 @@
 
 {% block products -%}
 <div class="row">
-    {% for entity in entities %}
+    {% for entity in pagination %}
     <div class="col-sm-3">
         <div class="" style="padding: 10px;">
             <a href="{{ path('product_show', { 'slug': entity.slug }) }}">
@@ -13,11 +13,14 @@
                 <p>
                     <small>{{ entity.description }}</small>
                 </p>
-                <p>{{ 'price'|trans }}:{{ entity.price }}</p>
-                <p><a href="#" class="btn btn-primary btn-sm" role="button">{{ 'buy'|trans }}</a></p>
             </div>
         </div>
     </div>
+    {% else %}
+    <div>no results</div>
     {% endfor %}
+</div>
+<div class="navigation">
+    {{ knp_pagination_render(pagination) }}
 </div>
 {% endblock %}

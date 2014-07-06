@@ -18,26 +18,7 @@
     <div class="col-sm-6">
         <div class="well">
             <h4>Últimas Novedades</h4>
-            <div class="media">
-                <a class="pull-left" href="#">
-                    <img class="media-object" src="http://lorempixel.com/64/64/sports/3/" alt="...">
-                </a>
-                <div class="media-body">
-                    <h4 class="media-heading">Media heading</h4>
-                    ...
-                </div>
-            </div>
-            <div class="media">
-                <a class="pull-left" href="#">
-                    <img class="media-object" src="http://lorempixel.com/64/64/sports/3/" alt="...">
-                </a>
-                <div class="media-body">
-                    <h4 class="media-heading">Media heading</h4>
-                    ...
-                </div>
-            </div>
-
-
+            {{ render(controller('FlowcodeNewsBundle:Post:lasts')) }}
         </div>
     </div>
 </div>

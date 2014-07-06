@@ -18,7 +18,6 @@ class ProductType extends AbstractType
             ->add('name')
             ->add('description')
             ->add('content', 'ckeditor')
-            ->add('price')
             ->add('enabled')
             ->add('category')
             ->add('tags')
