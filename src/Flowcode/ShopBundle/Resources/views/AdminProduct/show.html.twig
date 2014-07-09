@@ -64,7 +64,7 @@
                 {% for galleryItem in entity.getMediaGallery.getGalleryItems %}
                 <div class="col-sm-3">
                     <a class="thumbnail">
-                        <img src="/{{ galleryItem.media.getWebPath }}" class="img-responsive">
+                        <img src="{{ asset(galleryItem.media.getWebPath) }}" alt="{{ galleryItem.media.name }}" class="img-responsive">
                     </a>
                 </div>
                 {% endfor %}
@@ -72,7 +72,7 @@
         </div>
     </div>
     <div class="col-sm-4">
-        <img src="{{ entity.getImage }}" alt="..." class="img-responsive">
+        <img src="{{ asset(entity.getImage.getWebPath) }}" alt="{{ entity.getImage.name }}" class="img-responsive">
     </div>
 </div>
 {% endblock %}

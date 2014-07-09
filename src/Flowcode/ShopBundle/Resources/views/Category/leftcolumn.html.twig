@@ -1,8 +1,22 @@
-<ul class="list-group">
+<div class="panel-group category-products" id="accordian">
     {% for entity in entities %}
-    <li class="list-group-item">
-        <span class="badge"></span>
-        <a href="{{ path('product_by_category', { 'slug': entity.slug }) }}">{{ entity.name }}</a>
-    </li>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordian" href="#{{ entity.slug }}">
+                    <span class="badge pull-right"><i class="fa fa-plus"></i></span>
+                    {{ entity.name }}
+                </a>
+            </h4>
+        </div>
+        <div id="{{ entity.slug }}" class="panel-collapse collapse">
+            <div class="panel-body">
+                <ul>
+                    <li><a href="{{ path('product_by_category', { 'slug': entity.slug }) }}">{{ entity.name }}</a></li>
+                    <li><a href="">Under Armour </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
     {% endfor %}
-</ul>
+</div>
