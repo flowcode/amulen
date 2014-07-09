@@ -25,8 +25,8 @@
             <div class="row">
         {% for galleryItem in entity.getMediaGallery.getGalleryItems %}
                 <div class="col-sm-4">
-                    <a href="/{{ galleryItem.media.getWebPath }}" class="thumbnail" data-lightbox="roadtrip">
-                        <img src="/{{ galleryItem.media.getWebPath }}" class="img-responsive">
+                    <a href="{{ asset(galleryItem.media.getWebPath) }}" class="thumbnail" data-lightbox="roadtrip">
+                        <img src="{{ asset(galleryItem.media.getWebPath) }}" class="img-responsive">
                     </a>
                 </div>
         {% endfor %}

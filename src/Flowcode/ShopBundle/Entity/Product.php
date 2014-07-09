@@ -368,7 +368,7 @@ class Product {
     public function getImage() {
         $webPath = "";
         if (!is_null($this->mediaGallery) && $this->mediaGallery->getGalleryItems()->count() > 0) {
-            $webPath = "/" . $this->getMediaGallery()->getGalleryItems()->first()->getMedia()->getWebPath();
+            $webPath = $this->getMediaGallery()->getGalleryItems()->first()->getMedia()->getWebPath();
         }else{
             $webPath = "http://placehold.it/160";
         }

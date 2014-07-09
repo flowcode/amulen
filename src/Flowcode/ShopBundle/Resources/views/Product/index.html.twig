@@ -6,7 +6,7 @@
     <div class="col-sm-3">
         <div class="" style="padding: 10px;">
             <a href="{{ path('product_show', { 'slug': entity.slug }) }}">
-                <img src="{{ entity.getImage }}" alt="..." class="img-responsive">
+                <img src="{{ asset( entity.getImage ) }}" alt="..." class="img-responsive">
             </a>
             <div class="caption" style="height: 200px;">
                 <h5>{{ entity.name }}</h5>
