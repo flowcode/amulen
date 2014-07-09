@@ -9,7 +9,7 @@
 
     <ul class="slides">
         {% for entity in gallery.galleryItems %}
-        <li><img src="{{ asset(entity.getMedia.path) | imagine_filter('main_slider') }}" alt="Slide 01"></li>    
+        <li><img src="{{ asset(entity.getMedia.getWebPath) | imagine_filter('main_slider') }}" alt="Slide 01"></li>    
         {% endfor %}
     </ul> 
 </section>

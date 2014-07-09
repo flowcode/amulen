@@ -142,8 +142,7 @@ class Media {
     }
 
     public function getWebPath() {
-        //return null === $this->path ? null : $this->getUploadDir() . '/' . $this->path;
-        return $this->path;
+        return null === $this->path ? null : $this->getUploadDir() . '/' . $this->path;
     }
 
     protected function getUploadRootDir() {
@@ -151,7 +150,7 @@ class Media {
     }
 
     protected function getUploadDir() {
-        return 'uploads/media';
+        return '';
     }
 
     public function __toString() {

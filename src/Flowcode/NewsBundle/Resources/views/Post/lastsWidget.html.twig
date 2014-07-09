@@ -2,7 +2,7 @@
 <div class="media">
     <a class="pull-left" href="#">
     {% if entity.getImage %} 
-        <img class="media-object" src="{{ asset(entity.getImage.path) | imagine_filter('my_thumb') }}" alt="{{entity.getImage.name}}" />
+        <img class="media-object" src="{{ asset(entity.getImage.getWebPath) | imagine_filter('my_thumb') }}" alt="{{entity.getImage.name}}" />
     {% endif %}
     </a>
     <div class="media-body">
