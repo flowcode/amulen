@@ -1,7 +1,10 @@
 {% extends '::backend.html.twig' %}
 
 {% block body %}
-    <h1>User Group</h1>
+
+<h1>{{"User Group"|trans}}</h1>
+
+<div style="width: 100%">
 
     <table class="record_properties">
         <tbody>
@@ -27,18 +30,21 @@
             </tr>
         </tbody>
     </table>
+    
+    <br />
+    
+    {{ form_start(delete_form) }}
+    <a class = "btn btn-primary" href="{{ path('admin_usergroup') }}">
+        Back to the list
+    </a>
+    <a class="btn btn-primary" href="{{ path('admin_usergroup_edit', { 'id': id }) }}">
+        Edit
+    </a>
+    {{ form_widget(delete_form.submit) }}
+    {{ form_errors(delete_form) }}
+    {{ form_row(delete_form._token) }}
+    {{ form_end(delete_form) }}
+            
+</div>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_usergroup') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('admin_usergroup_edit', { 'id': id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
 {% endblock %}
