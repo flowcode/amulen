@@ -1,4 +1,4 @@
-{% extends '::base.html.twig' %}
+{% extends '::backend.html.twig' %}
 
 {% block body %}
     <h1>User Group creation</h1>
@@ -6,7 +6,6 @@
     {%if form is defined%}
         {{ form(form) }}
     {%endif%}
-    
     
     {%if roles is defined %}
     <select multiple>

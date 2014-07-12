@@ -22,9 +22,7 @@ class DefaultController extends Controller {
      * @Template()
      */
     public function indexAction() {
-        
-        
-        
+
         return $this->render('FlowcodeDashboardBundle:Default:index.html.twig', array());
     }
 
