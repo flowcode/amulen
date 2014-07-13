@@ -5,8 +5,12 @@
     <link href="{{ asset('bundles/flowcodeuser/css/userGroupList.css') }}" rel="stylesheet" media="screen">
 {% endblock %}
 
-{% block body -%}
+{% block body %}
     <h1>User Group list</h1>
+
+    <a class="btn btn-primary" href="{{ path('admin_usergroup_new') }}">
+        Create a new entry
+    </a>
     
     {% if entities %}
 
@@ -51,10 +55,6 @@
     {% else %}
         No hay grupos definidos...
     {% endif %}
-
-    <a class="btn" href="{{ path('admin_usergroup_new') }}">
-        Create a new entry
-    </a>
 
 {% endblock %}
     

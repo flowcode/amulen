@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Flowcode\UserBundle\Entity\UserGroup;
+use Flowcode\UserBundle\Entity\UserGroup as UserGroup;
 use Flowcode\UserBundle\Form\UserGroupType;
 
 /**
@@ -122,7 +122,9 @@ class UserGroupController extends Controller {
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find UserGroup entity.');
         }
+        
 
+        
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
@@ -199,21 +201,31 @@ class UserGroupController extends Controller {
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id) {
+
         $form = $this->createDeleteForm($id);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('FlowcodeUserBundle:UserGroup')->find($id);
-
-            if (!$entity) {
+            $userGroup = $em->getRepository('FlowcodeUserBundle:UserGroup')->find($id);
+            
+            if (!$userGroup) {
                 throw $this->createNotFoundException('Unable to find UserGroup entity.');
             }
-
-            $em->remove($entity);
-            $em->flush();
+            
+            $users = $this->getUsersByUserGroup($userGroup);
+            if (count($users) == 0)
+            {
+                $em->remove($userGroup);
+                $em->flush();
+            }
+            else
+            {
+                throw $this->createAccessDeniedException("El grupo de usuarios " . $userGroup->getName() ." posee usuarios asociados.");
+            }
         }
-
+        
         return $this->redirect($this->generateUrl('admin_usergroup'));
     }
 
@@ -258,5 +270,18 @@ class UserGroupController extends Controller {
              );
             
         return $form;
+    }
+    
+    /**
+     * Get Users by user group.  Dado un grupo de roles de usuario, retorna todos
+     * los usuarios que pertenecen al grupo.
+     *
+     * @param UserGroup $userGroup El grupo.
+     *
+     * @return array() Los usuarios.
+     */    
+    private function getUsersByUserGroup(\UserGroup $userGroup)
+    {
+        
     }
 }
