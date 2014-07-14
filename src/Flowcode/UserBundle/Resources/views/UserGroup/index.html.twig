@@ -7,18 +7,19 @@
 
 {% block body %}
     <h1>User Group list</h1>
-
-    <a class="btn btn-primary" href="{{ path('admin_usergroup_new') }}">
-        Create a new entry
-    </a>
     
     {% if entities %}
 
     <div id="user_groups">
-        
-        <input class="search" />
-        <span class="sort" data-sort="name">Sort by name</span>
-        <span class="sort" data-sort="aaa">Sort by roles</span>
+        <div style="margin: 25px 0 5px 0;">
+            <a class="btn btn-primary" href="{{ path('admin_usergroup_new') }}">Create a new entry</a>
+            <span class="btn btn-primary" data-sort="name">Ordenar por nombre</span>
+            <span class="btn btn-primary" data-sort="aaa">Ordenar por rol</span>
+        </div>
+        <div style="margin: 50px 0 15px 0;">
+            <span>Buscar</span>
+            <input class="search" />
+        </div>
         <div class="list_container">
             <ul class="list">
                 {% for entity in entities %}
@@ -68,7 +69,7 @@
                 valueNames: [ 'name', 'aaa' ]
             };
 
-            var hackerList = new List('user_groups', options);
+            var list = new List('user_groups', options);
         });
     </script>
 {% endblock  %}
