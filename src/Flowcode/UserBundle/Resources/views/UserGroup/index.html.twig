@@ -6,16 +6,18 @@
 {% endblock %}
 
 {% block body %}
+
     <h1>User Group list</h1>
-    
-    {% if entities %}
 
     <div id="user_groups">
         <div style="margin: 25px 0 5px 0;">
             <a class="btn btn-primary" href="{{ path('admin_usergroup_new') }}">Create a new entry</a>
+            {% if entities %}
             <span class="btn btn-primary" data-sort="name">Ordenar por nombre</span>
             <span class="btn btn-primary" data-sort="aaa">Ordenar por rol</span>
+            {%endif%}
         </div>
+        {% if entities %}
         <div style="margin: 50px 0 15px 0;">
             <span>Buscar</span>
             <input class="search" />
@@ -51,9 +53,10 @@
                 {% endfor %}
             </ul>
         </div>
+        {%endif%}
     </div>        
 
-    {% else %}
+    {% if not entities %}
         No hay grupos definidos...
     {% endif %}
 

@@ -227,7 +227,7 @@ class UserGroupController extends Controller {
             }
             else
             {
-                $this->getRequest()->getSession()->set("mensaje_usuario", "El grupo de usuarios " . $userGroup->getName() ." posee usuarios asociados.  ");
+                $this->get('session')->getFlashBag()->add('warning', "El grupo de roles no pude eliminarse debido a que posee usuarios asociados.");
                 return $this->redirect($request->getUri());
             }
         }
@@ -285,19 +285,7 @@ class UserGroupController extends Controller {
      */    
     private function createViewBag ()
     {
-        $viewBag = array();
-        
-        // Si existe algun mensaje de usuario se lo carga en el viewbug.
-        
-        $mensajeUsuario = $this->getRequest()->getSession()->get("mensaje_usuario");
-        
-        if (count ($mensajeUsuario) > 0)
-        {
-            $viewBag ["mensaje_usuario"] = $mensajeUsuario;
-            $this->getRequest()->getSession()->remove("mensaje_usuario");
-        }
-        
-        return $viewBag;
+        return array();
     }    
     
     /**
