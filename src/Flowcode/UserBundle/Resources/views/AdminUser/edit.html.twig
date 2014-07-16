@@ -1,16 +1,47 @@
 {% extends '::backend.html.twig' %}
 
+{% block stylesheets %}
+    {{parent()}}
+    <link href="{{ asset('bundles/flowcodeuser/css/userGroupMenu.css') }}" rel="stylesheet" media="screen">
+{% endblock %}
+
 {% block body -%}
-    <h1>User edit</h1>
-
-    {{ form(edit_form, { 'style': 'horizontal' }) }}
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('admin_user') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    
+    <div class="contenido">
+        <div class="encabezado">
+            <h1>User edit</h1>
+        </div>
+        <div class="userGroupMenu">
+            <div class="menuItem">
+                <a class="btn btn-primary" href="{{ path('admin_user') }}">
+                    Back to the list
+                </a>
+            </div>
+            <div class="menuItem">
+                <a class="btn btn-primary" href="{{ path('admin_user_edit', { 'id': entity.id }) }}">
+                    Edit
+                </a>
+            </div>
+            <div class="menuItem">
+                {{ form(delete_form) }}
+            </div>
+        </div>
+        <div class="cuerpo">
+            {{form_start(edit_form)}}
+            <div style="float: left; width: 80%;">
+                {{form_row(edit_form.name)}}
+                {{form_row(edit_form.username)}}
+                {{form_row(edit_form.email)}}
+                {{form_row(edit_form.groups)}}
+                {{form_row(edit_form.enabled)}}
+                {{form_row(edit_form.locked)}}
+            </div>
+            <div style="padding: 25px 0 0; text-align: right; ">
+                {{form_row(edit_form.submit)}}
+            </div>
+            {{form_row(edit_form._token)}}
+            
+            {{ form_end(edit_form) }}
+        </div>
+    </div>
 {% endblock %}
