@@ -17,4 +17,9 @@
         </service>
     </services>
     -->
+    <services>
+        <service id="flowcode.security.roles" class="Flowcode\UserBundle\Services\Roles">
+              <argument>%security.role_hierarchy.roles%</argument>
+        </service>
+    </services>
 </container>

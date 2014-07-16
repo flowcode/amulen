@@ -16,12 +16,15 @@ class UserType extends AbstractType {
         $builder
                 ->add('name')
                 ->add('username')
-                ->add('groups')
+                ->add('password', 'hidden')
                 ->add('email')
                 ->add('enabled', null, array("required" => false))
                 ->add('locked', null, array("required" => false))
-                ->add('roles')
-        ;
+                ->add('groups', 'entity', array(
+                        'class' => 'FlowcodeUserBundle:UserGroup',
+                        'property' => 'name',
+                        'multiple' => true,
+                     ));
     }
 
     /**
