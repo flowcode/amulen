@@ -48,7 +48,8 @@ class UserGroupController extends Controller {
      */
     public function newAction() {
         
-        $viewBag = array();
+        $viewBag = $this->createViewBag();
+        
         $entity = new UserGroup();
         $viewBag['form'] = $this->createCreateForm($entity)->createView();
         
@@ -88,6 +89,9 @@ class UserGroupController extends Controller {
      * @Template()
      */
     public function showAction($id) {
+        
+        $viewBag = $this->createViewBag();
+        
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('FlowcodeUserBundle:UserGroup')->find($id);
@@ -97,14 +101,15 @@ class UserGroupController extends Controller {
         }
 
         $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'id' => $entity->getId(),
-            'name' => $entity->getName(),
-            'roles' => $this->get('flowcode.security.roles')->traducirRoles($entity->getRoles()),
-            'delete_form' => $deleteForm->createView(),
-        );
+        
+        $viewBag['id'] = $entity->getId();
+        $viewBag['name'] = $entity->getName();
+        $viewBag['roles'] = $this->get('flowcode.security.roles')->traducirRoles($entity->getRoles());
+        $viewBag['delete_form'] = $deleteForm->createView();
+        
+        return $viewBag;
     }
+
 
     /**
      * Displays a form to edit an existing UserGroup entity.
@@ -116,23 +121,22 @@ class UserGroupController extends Controller {
     public function editAction($id) {
         
         $em = $this->getDoctrine()->getManager();
-
+        $viewBag = $this->createViewBag();
+        
         $entity = $em->getRepository('FlowcodeUserBundle:UserGroup')->find($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find UserGroup entity.');
         }
         
-
-        
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return array(
-            'entity' => $entity,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        $viewBag ['entity'] = $entity;
+        $viewBag ['edit_form'] = $editForm->createView();
+        $viewBag ['delete_form'] = $deleteForm->createView();
+
+        return $viewBag;
     }
 
     /**
@@ -215,6 +219,7 @@ class UserGroupController extends Controller {
             }
             
             $users = $this->getUsersByUserGroup($userGroup);
+            
             if (count($users) == 0)
             {
                 $em->remove($userGroup);
@@ -222,7 +227,8 @@ class UserGroupController extends Controller {
             }
             else
             {
-                throw $this->createAccessDeniedException("El grupo de usuarios " . $userGroup->getName() ." posee usuarios asociados.");
+                $this->getRequest()->getSession()->set("mensaje_usuario", "El grupo de usuarios " . $userGroup->getName() ." posee usuarios asociados.  ");
+                return $this->redirect($request->getUri());
             }
         }
         
@@ -273,6 +279,28 @@ class UserGroupController extends Controller {
     }
     
     /**
+     * Get Elementos de la vista.
+     *
+     * @return array() Parametros de la vista.
+     */    
+    private function createViewBag ()
+    {
+        $viewBag = array();
+        
+        // Si existe algun mensaje de usuario se lo carga en el viewbug.
+        
+        $mensajeUsuario = $this->getRequest()->getSession()->get("mensaje_usuario");
+        
+        if (count ($mensajeUsuario) > 0)
+        {
+            $viewBag ["mensaje_usuario"] = $mensajeUsuario;
+            $this->getRequest()->getSession()->remove("mensaje_usuario");
+        }
+        
+        return $viewBag;
+    }    
+    
+    /**
      * Get Users by user group.  Dado un grupo de roles de usuario, retorna todos
      * los usuarios que pertenecen al grupo.
      *
@@ -280,9 +308,9 @@ class UserGroupController extends Controller {
      *
      * @return array() Los usuarios.
      */    
-    private function getUsersByUserGroup(\UserGroup $userGroup)
+    private function getUsersByUserGroup(UserGroup $userGroup)
     {
-        //$em is the entity manager
+        return 10;
         $em = $this->getDoctrine()->getEntityManager();
 
         $query = $em->createQuery('SELECT '
@@ -294,6 +322,5 @@ class UserGroupController extends Controller {
         $users = $query->getResult(); 
 
         return $users;
-        
     }
 }
