@@ -1,14 +1,21 @@
 {% extends '::frontend.html.twig' %}
 
 {% block body -%}
+
 <div class="row">
     <div class="col-sm-3">
-        {% block categorys -%}
-        {{ render(controller('FlowcodeShopBundle:Category:actives')) }}
-        {% endblock %}
+        <div class="left-sidebar">
+            <h2>Category</h2>
+            {% block categorys -%}
+            {{ render(controller('FlowcodeShopBundle:Category:actives')) }}
+            {% endblock %}
+        </div>
     </div>
-    <div class="col-sm-9">
+    <div class="col-sm-9 padding-right">
+        <div class="features_items"><!--features_items-->
+            <h2 class="title text-center">Features Items</h2>
         {% block products -%}{% endblock %}
+        </div>
     </div>
 
 </div>

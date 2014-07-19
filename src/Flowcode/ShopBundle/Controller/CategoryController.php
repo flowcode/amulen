@@ -33,7 +33,9 @@ class CategoryController extends Controller {
 
     public function activesAction() {
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('FlowcodeClassificationBundle:Category')->findAll();
+        $rootName = $this->container->getParameter('flowcode_shop.root_category');
+        $root = $em->getRepository('FlowcodeClassificationBundle:Category')->findOneBy(array("name" => $rootName));
+        $entities = $em->getRepository('FlowcodeClassificationBundle:Category')->getChildren($root);
 
         return $this->render(
                         'FlowcodeShopBundle:Category:leftcolumn.html.twig', array('entities' => $entities)

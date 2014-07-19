@@ -2,11 +2,12 @@
 
 namespace Flowcode\ShopBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Flowcode\ShopBundle\Entity\Product;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Flowcode\ShopBundle\Entity\Product;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Product controller.
@@ -22,14 +23,52 @@ class ProductController extends Controller {
      * @Method("GET")
      * @Template()
      */
-    public function indexAction() {
+    public function indexAction(Request $request) {
         $em = $this->getDoctrine()->getManager();
+        
+        /* seo metadata */
+        $seoPage = $this->container->get('sonata.seo.page');
+        $baseTitle = $seoPage->getTitle();
+        $title = "Productos - " . $baseTitle;
+        $seoPage->setTitle($title);
 
-        $entities = $em->getRepository('FlowcodeShopBundle:Product')->findAll();
+        /* pagination */
+        $pageNumber = $request->get("page", 1);
+        $products = $this->getDoctrine()->getRepository("FlowcodeShopBundle:Product")->findEnabledByPageAndCategory();
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($products, $this->get('request')->query->get('page', $pageNumber), 2);
 
         return array(
-            'entities' => $entities,
+            'pagination' => $pagination,
         );
+        
+    }
+    /**
+     * Lists all Product entities.
+     *
+     * @Route("/category/{slug}", name="product_by_category")
+     * @Method("GET")
+     * @Template("FlowcodeShopBundle:Product:index.html.twig")
+     */
+    public function listByCategoryAction(Request $request, $slug) {
+        $em = $this->getDoctrine()->getManager();
+        
+        /* seo metadata */
+        $seoPage = $this->container->get('sonata.seo.page');
+        $baseTitle = $seoPage->getTitle();
+        $title = "Productos - " . $baseTitle;
+        $seoPage->setTitle($title);
+
+        /* pagination */
+        $pageNumber = $request->get("page", 1);
+        $products = $this->getDoctrine()->getRepository("FlowcodeShopBundle:Product")->findEnabledByPageAndCategory($slug);
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($products, $this->get('request')->query->get('page', $pageNumber), 2);
+
+        return array(
+            'pagination' => $pagination,
+        );
+        
     }
 
     /**
@@ -46,6 +85,11 @@ class ProductController extends Controller {
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Product entity.');
+        } else {
+            $seoPage = $this->container->get('sonata.seo.page');
+            $baseTitle = $seoPage->getTitle();
+            $title = ucfirst($entity->getName()) . " - Productos - " . $baseTitle;
+            $seoPage->setTitle($title);
         }
 
         return array(

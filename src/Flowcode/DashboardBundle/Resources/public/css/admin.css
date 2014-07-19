@@ -49,3 +49,9 @@ html, body {
 .tile{
     margin-bottom: 5px;
 }
+
+.elfinder .elfinder-button {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}

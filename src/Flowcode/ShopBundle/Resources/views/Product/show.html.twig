@@ -1,29 +1,70 @@
 {% extends 'FlowcodeShopBundle::shop.html.twig' %}
 
+{% block stylesheets %}
+<link href="{{ asset('bundles/flowcodeshop/css/lightbox.css')}}" rel="stylesheet" />
+    {{ parent() }}
+{% endblock %}
+
+
 {% block products -%}
-<h1>{{ entity.name }}</h1>
-<div>{{ entity.description }}</div>
-<div class="row">
-    <div class="col-sm-6">
-        <img src="{{ entity.getImage }}" class="img-responsive">
-    </div>
-    <div class="col-sm-6">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <div>
-                    {{ entity.content|raw }}
-                </div>
-                <div>
-                    ${{ entity.price }}
-                </div>
-                <a href="#" class="btn btn-primary btn-lg" >Add to cart</a>
-            </div>
+<div class="product-details"><!--product-details-->
+    <div class="col-sm-5">
+        <div class="view-product">
+            <img src="{{ asset(entity.getImage.getWebPath) }}" alt="" class="img-responsive" />
+            <h3>ZOOM</h3>
         </div>
+        <div id="similar-product" class="carousel slide" data-ride="carousel">
+
+            <!-- Wrapper for slides -->
+            <div class="carousel-inner">
+
+                <div class="item active">
+                {% for galleryItem in entity.getMediaGallery.getGalleryItems %}
+                    <div class="item">
+                        <a href="{{ asset(galleryItem.media.getWebPath) }}">
+                            <img src="{{ asset(galleryItem.media.getWebPath) }}" class="img-responsive">
+                        </a>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+
+            <!-- Controls -->
+            <a class="left item-control" href="#similar-product" data-slide="prev">
+                <i class="fa fa-angle-left"></i>
+            </a>
+            <a class="right item-control" href="#similar-product" data-slide="next">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        </div>
+
     </div>
-</div>
+    <div class="col-sm-7">
+        <div class="product-information"><!--/product-information-->
+            <h2>{{ entity.name }}</h2>
+            <p>Web ID: {{ entity.id }}</p>
+            <span>
+                <span>$ {{ entity.price }}</span>
+                <label>Quantity:</label>
+                <input type="text" value="3" />
+                <button type="button" class="btn btn-fefault cart">
+                    <i class="fa fa-shopping-cart"></i>
+                    Add to cart
+                </button>
+            </span>
+            {{ entity.content|raw }}
+        </div><!--/product-information-->
+    </div>
+</div><!--/product-details-->
+
 <div>
     <a href="{{ path('product') }}" class="btn btn-default" >
         Back to the list
     </a>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+<script type="text/javascript" src="{{ asset('bundles/flowcodeshop/js/lightbox.min.js')}}"></script>
 {% endblock %}

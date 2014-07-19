@@ -60,7 +60,7 @@ class Product {
     /**
      * @var float
      *
-     * @ORM\Column(name="price", type="float")
+     * @ORM\Column(name="price", type="float", nullable=true)
      */
     private $price;
 
@@ -366,13 +366,14 @@ class Product {
     }
 
     public function getImage() {
-        $webPath = "";
         if (!is_null($this->mediaGallery) && $this->mediaGallery->getGalleryItems()->count() > 0) {
-            $webPath = "/" . $this->getMediaGallery()->getGalleryItems()->first()->getMedia()->getWebPath();
+            $media = $this->getMediaGallery()->getGalleryItems()->first()->getMedia();
         }else{
-            $webPath = "http://placehold.it/160";
+            $media = new \Flowcode\MediaBundle\Entity\Media();
+            $media->setName("default image");
+            $media->setPath("uploads/default.jpg");
         }
-        return $webPath;
+        return $media;
     }
 
 }
