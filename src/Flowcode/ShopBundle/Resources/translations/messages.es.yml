@@ -1,13 +1,23 @@
 
 # products
-price: precio
-Price: Precio
-yes: si
-products: productos
-Products: Productos
-Product: Producto
-product: producto
-product categorys: categorias de productos
-new product: nuevo producto
-category: categorias
-Category: Categorias
+precio: precio
+Precio: Precio
+si: si
+productos: productos
+Productos: Productos
+Producto: Producto
+producto: producto
+categorias de productos: categorias de productos
+nuevo producto: nuevo producto
+categorias: categorias
+Categorias: Categorias
+Tablero de la tienda : Tablero de la tienda
+Inicio : Inicio
+Nuevo : Nuevo
+Nombre : Nombre
+Galeria de medios : Galeria de medios
+Etiquetas : Etiquetas
+Nuevo producto : Nuevo producto
+Crear : Crear
+Categorias de producto : Categorias de producto
+Nueva categoria : Nueva categoria

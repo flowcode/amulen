@@ -1,21 +1,30 @@
 {% extends '::backend.html.twig' %}
 
-{% block body -%}
 
-<ol class="breadcrumb">
-    <li><a href="{{ path('admin_dashboard') }}">Home</a></li>
-    <li><a href="{{ path('admin_shop_dashboard') }}">Shop Dashboard</a></li>
-    <li>{{ "product categorys"|trans }}</li>
-</ol>
+{% block migas %}
+    {{parent()}}
+    <li><a href="{{ path('admin_shop_dashboard') }}">{{"Tablero de al tienda"|trans}}</a></li>
+    <li>{{ "Categorias de producto"|trans }}</li>
+{% endblock %}
+
+{% block body %}
+
 <div class="page-header">
-    <h1>{{ "product categorys"|trans|title }}</h1>
+    <h1>{{ "Categorias de producto"|trans|title }}</h1>
+    {%if rootcategory.id is defined%}
+        {% set rootCategoryId = rootcategory.id %}
+    {% else %}
+        {% set rootCategoryId = -1 %}
+    {%endif%}
+
     <ul class="list-inline">
         <li>
-            <a href="{{ path('admin_shop_category_children', { 'id': rootcategory.id }) }}" class="btn btn-bg btn-primary">
-            {{ "create new"|trans }}
+            <a href="{{ path('admin_shop_category_children', { 'id': rootCategoryId }) }}" class="btn btn-bg btn-primary">
+            {{ "Nueva categoria"|trans }}
             </a>
         </li>
     </ul>
+    
 </div>
 <table class="records_list table table-condensed">
     <thead>
@@ -48,4 +57,4 @@
 </table>
 
 
-    {% endblock %}
+{% endblock %}

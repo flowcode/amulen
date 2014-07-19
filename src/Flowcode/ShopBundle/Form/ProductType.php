@@ -5,6 +5,7 @@ namespace Flowcode\ShopBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Flowcode\ClassificationBundle\Entity\Tag;
 
 class ProductType extends AbstractType
 {
@@ -17,12 +18,12 @@ class ProductType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('content', 'ckeditor')
-            ->add('price')
-            ->add('enabled')
             ->add('category')
-            ->add('tags')
-            ->add('mediaGallery')
+            ->add('price', 'text', array("label" => "Precio"))
+            ->add('enabled')
+            ->add('tags', 'collection', array("type" => new Tag(), "label" => "Etiquetas"))
+            ->add('mediaGallery', "choice", array("label" => "Galeria de medios"))
+            ->add('content', 'ckeditor')
         ;
     }
     

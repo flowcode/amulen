@@ -1,17 +1,19 @@
 {% extends '::backend.html.twig' %}
 
-{% block body -%}
-<ol class="breadcrumb">
-    <li><a href="{{ path('admin_dashboard') }}">Home</a></li>
-    <li><a href="{{ path('admin_shop_dashboard') }}">Shop Dashboard</a></li>
-    <li>{{ "products"|trans }}</li>
-</ol>
+{% block migas %}
+    {{parent()}}
+    <li><a href="{{ path('admin_shop_dashboard') }}">{{"Tablero de al tienda"|trans}}</a></li>
+    <li>{{ "Productos"|trans }}</li>
+{% endblock %}
+
+{% block body %}
+
 <div class="page-header">
-    <h1>{{ "products"|trans|title }}</h1>
+    <h1>{{ "Productos"|trans|title }}</h1>
     <ul class="list-inline">
         <li>
             <a href="{{ path('admin_product_new') }}" class="btn btn-default">
-                {{ "create new"|trans }}
+                {{ "Crear producto"|trans }}
             </a>
         </li>
     </ul>
@@ -20,11 +22,11 @@
     <thead>
         <tr>
             <th>#</th>
-            <th>{{ "name"|trans }}</th>
-            <th>{{ "description"|trans }}</th>
-            <th>{{ "price"|trans }}</th>
-            <th>{{ "enabled"|trans }}</th>
-            <th>{{ "actions"|trans }}</th>
+            <th>{{ "Nombre"|trans }}</th>
+            <th>{{ "Descripcion"|trans }}</th>
+            <th>{{ "Precio"|trans }}</th>
+            <th>{{ "Habilitado"|trans }}</th>
+            <th>{{ "Acciones"|trans }}</th>
         </tr>
     </thead>
     <tbody>
