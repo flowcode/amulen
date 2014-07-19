@@ -1,0 +1,31 @@
+/*  www.flowcode.com.ar
+    Created on : 19/07/2014, 01:28:46
+    Author     : Maximiliano Monzón <mmonzon@flowcode.com.ar>
+*/
+
+.formulario {
+    clear: both;
+    width: 100%;
+}
+.columna-1 {
+    float: left;
+    padding: 0 15% 0 0;
+    width: 40%;
+}
+.columna-2 {
+    float: left;
+    padding: 0 15% 0 0;
+    width: 40%;
+}
+.menu {
+    float: left;
+    width: 20%;
+}
+.menuItem {
+}
+.contenido {
+    float: left;
+    width: 100%;
+}
+
+
