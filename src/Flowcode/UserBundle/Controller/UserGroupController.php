@@ -299,5 +299,16 @@ class UserGroupController extends Controller {
     private function getUsersByUserGroup(UserGroup $userGroup)
     {
         return 10;
+        $em = $this->getDoctrine()->getEntityManager();
+
+        $query = $em->createQuery('SELECT '
+                . '                     u, g '
+                . '                FROM Flowcode\UserBundle\Entity\User u'
+                . '                     join u.groups g '
+                . '                WHERE '
+                . '                     g.name = '.$userGroup->getName().'');
+        $users = $query->getResult(); 
+
+        return $users;
     }
 }

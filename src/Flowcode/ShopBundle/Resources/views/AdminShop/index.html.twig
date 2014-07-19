@@ -1,11 +1,12 @@
 {% extends 'backend.html.twig' %}
 
+{% block migas %}
+    {{parent()}}
+    <li>{{"Tablero de al tienda"|trans}}</li>
+{% endblock %}
+    
 {% block body %}
-<ol class="breadcrumb">
-    <li><a href="#">Home</a></li>
-    <li>Shop Dashboard</li>
-</ol>
-
+    
 <div class="row">
     <div class="col-sm-8 col-sm-offset-2">
         <div class="row">

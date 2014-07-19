@@ -22,9 +22,8 @@ class DefaultController extends Controller {
      * @Template()
      */
     public function indexAction() {
-        
+
         $today = date("d/m/Y H:m");
-        
         return $this->render('FlowcodeDashboardBundle:Default:index.html.twig', array(
             "datime" => $today,
         ));

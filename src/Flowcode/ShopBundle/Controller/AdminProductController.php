@@ -98,8 +98,8 @@ class AdminProductController extends Controller {
             'action' => $this->generateUrl('admin_product_create'),
             'method' => 'POST',
         ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
+            
+        $form->add('submit', 'submit', array('label' => 'Crear'));
 
         return $form;
     }
