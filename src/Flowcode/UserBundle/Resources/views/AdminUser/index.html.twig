@@ -3,17 +3,21 @@
 {% block body -%}
     <h1>User list</h1>
 
+    <div style="margin: 15px 0 15px 0;">
+        <a class ="btn btn-primary" href="{{ path('admin_user_new') }}">
+            Create a new entry
+        </a>
+    </div>
+                
     <table class="records_list table table-condensed">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Enabled</th>
-                <th>Lastlogin</th>
-                <th>Locked</th>
-                <th>Passwordrequestedat</th>
                 <th>Name</th>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Lastlogin</th>
+                <th>Enabled</th>
+                <th>Locked</th>
                 <th>Created</th>
                 <th>Updated</th>
                 <th>Actions</th>
@@ -22,36 +26,35 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td>{{ entity.id }}</td>
-                <td><a href="{{ path('admin_user_show', { 'id': entity.id }) }}">{{ entity.username }}</a></td>
-                <td>{{ entity.email }}</td>
-                <td>{{ entity.enabled }}</td>
-                <td>{% if entity.lastLogin %}{{ entity.lastLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.locked }}</td>
-                <td>{% if entity.passwordRequestedAt %}{{ entity.passwordRequestedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{{ entity.name }}</td>
+                <td>{{ entity.email }}</td>
+                <td><a href="{{ path('admin_user_show', { 'id': entity.id }) }}">{{ entity.username }}</a></td>
+                <td>{% if entity.lastLogin %}{{ entity.lastLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                {%if entity.enabled%}
+                    <div class="glyphicon glyphicon-thumbs-up"/>
+                    {%else%}
+                    <div class="glyphicon glyphicon-thumbs-down"/>
+                {%endif%}
+                </td>
+                <td>
+                {%if entity.locked %}
+                    <div class="glyphicon glyphicon-ban-circle"/>
+                    {%else%}
+                    <div class="glyphicon glyphicon-ok-circle"/>
+                {%endif%}
+                </td>
                 <td>{% if entity.created %}{{ entity.created|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>{% if entity.updated %}{{ entity.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('admin_user_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('admin_user_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
+                    <a class="glyphicon glyphicon-user" href="{{ path('admin_user_show', { 'id': entity.id }) }}">show</a>
+                    <a class="glyphicon glyphicon-pencil" href="{{ path('admin_user_edit', { 'id': entity.id }) }}">edit</a>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-        <ul>
-        <li>
-            <a href="{{ path('admin_user_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+
+{% endblock %}
+    

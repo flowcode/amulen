@@ -59,7 +59,14 @@ class AdminUserController extends Controller {
             'form' => $form->createView(),
         );
     }
+/*
 
+$builder->add('save', 'button', array(
+    'attr' => array('class' => 'save'),
+));
+
+
+ *  */
     /**
      * Creates a form to create a User entity.
      *

@@ -1,0 +1,22 @@
+
+.contenido {
+    max-width: 500px;
+}
+.encabezado {
+    float: left;
+    margin-bottom: 4%;
+    width: 100%;
+}
+.userGroupMenu {
+    float: left;
+    margin-bottom: 4%;
+    width: 100%;
+}
+.menuItem {
+    float: left;
+    margin: 0 5px 5px 0;
+}
+.cuerpo {
+    float: left;
+    width: 100%;
+}
