@@ -1,4 +1,3 @@
-﻿
 /*************************
 *******Typography******
 **************************/
@@ -8,7 +7,6 @@
 
 body {
   font-family: 'Roboto', sans-serif;
-  background:;
   position: relative;
   font-weight:400px;
 }
@@ -899,7 +897,6 @@ h2.title {
   transition: height 500ms ease 0s;
   width: 100%;
   display: block;
-  opacity:;
 }
 
 .single-products:hover .product-overlay {
@@ -1489,11 +1486,6 @@ h2.title {
   padding: 6px 25px;
 }
 
-.login-form label{
-
-}
-
-
 .login-form label input {
   border: medium none;
   display: inline-block;
@@ -1504,7 +1496,7 @@ h2.title {
 }
 
 
-.or{
+/*.or{
 	background: #FE980F;
 	border-radius: 40px;
 	color: #FFFFFF;
@@ -1515,7 +1507,7 @@ h2.title {
 	margin-top: 75px;
 	text-align: center;
 	width: 50px;
-}
+}*/
 
 
 /*************************
