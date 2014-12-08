@@ -19,7 +19,7 @@ class SliderController extends Controller {
 
     public function mainSliderAction($max = 3) {
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('FlowcodeMediaBundle:Gallery')->findOneBy(array("slug" => "main-slider"));
+        $entity = $em->getRepository('FlowcodeMediaBundle:Gallery')->findOneBy(array("slug" => "slider-main"));
         return $this->render(
                         'FlowcodeMediaBundle:Slider:slider.html.twig', array('gallery' => $entity)
         );

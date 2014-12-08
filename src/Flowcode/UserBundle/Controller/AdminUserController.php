@@ -20,6 +20,17 @@ class AdminUserController extends Controller {
     /**
      * Lists all User entities.
      *
+     * @Route("/dashboard", name="admin_user_dashboard")
+     * @Method("GET")
+     * @Template()
+     */
+    public function dashboardAction() {
+        return array();
+    }
+
+    /**
+     * Lists all User entities.
+     *
      * @Route("/", name="admin_user")
      * @Method("GET")
      * @Template()
@@ -59,14 +70,16 @@ class AdminUserController extends Controller {
             'form' => $form->createView(),
         );
     }
-/*
 
-$builder->add('save', 'button', array(
-    'attr' => array('class' => 'save'),
-));
+    /*
+
+      $builder->add('save', 'button', array(
+      'attr' => array('class' => 'save'),
+      ));
 
 
- *  */
+     *  */
+
     /**
      * Creates a form to create a User entity.
      *
@@ -193,7 +206,7 @@ $builder->add('save', 'button', array(
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
-            
+
             /* get user manager */
             $userManager = $this->container->get('fos_user.user_manager');
             //$entity->setPlainPassword("juanma");

@@ -10,7 +10,7 @@ Name: Nombre
 actions: acciones
 show: mostrar
 edit: editar
-create new: crear nueva
+create new: crear
 previous level: nivel anterior
 add here: agregar aqui
 enabled: habilitado
@@ -20,7 +20,16 @@ Description: Descripcion
 back to list: volver al listado
 created: creación
 updated: actualización
+welcome: bienvenido
+
+Categorys: "categorías"
+Organizations: organizaciones
+Featured: destacado
 
 ## messages
 save_success: Los cambios fueron guardados.
 save_fail: Por favor verifique los datos.
+delete_success: Borrado exitosamente.
+
+previous: anterior
+next: siguiente

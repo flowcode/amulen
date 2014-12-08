@@ -20,7 +20,7 @@ class DefaultController extends Controller {
 
         $em = $this->getDoctrine()->getManager();
         $page = $em->getRepository('FlowcodePageBundle:Page')->findOneBy(array("name" => "name"));
-        $block = $em->getRepository('FlowcodePageBundle:Block')->findOneBy(array("name" => "bienvenida"));
+        $block = $em->getRepository('FlowcodePageBundle:Block')->findOneBy(array("name" => "welcome"));
 
         return array(
             'welcome' => $block->getContent(),
