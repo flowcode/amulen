@@ -10,6 +10,7 @@ Name: Nombre
 actions: acciones
 show: mostrar
 edit: editar
+create: crear
 create new: crear
 previous level: nivel anterior
 add here: agregar aqui

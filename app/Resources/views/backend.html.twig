@@ -6,11 +6,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}MiWeb S - Administration{% endblock %}</title>
         {% block stylesheets %}
-        <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
-        <link href="{{ asset('bundles/flowcodedashboard/css/admin.css') }}" rel="stylesheet" />
+            <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
+            <link href="{{ asset('bundles/flowcodedashboard/css/admin.css') }}" rel="stylesheet" />
         {% endblock %}
         <link rel="icon" type="image/png" href="{{ asset('bundles/flowcodedashboard/images/flowcode-fav-oficial-alpha.png') }}" />
-        
+
     </head>
     <body>
         <div class="wrapper">
@@ -24,83 +24,79 @@
                 </div>
 
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
-                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                    <ul class="nav navbar-nav">
-                        <li><a href="{{ url('admin_dashboard') }}" ><i class="glyphicon glyphicon-home"></i></a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contenido <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="{{ url('admin_post') }}">Classification</a></li>
-                                <li><a href="{{ url('admin_post') }}">News</a></li>
-                                <li><a href="{{ url('admin_media_dashboard') }}">Media</a></li>
-                                <li><a href="{{ url('admin_project_dashboard') }}">Proyectos</a></li>
-                                <li><a href="{{ url('admin_shop_dashboard') }}">Productos</a></li>
-                                <li><a href="{{ url('admin_page') }}">Paginas</a></li>
-                                <li><a href="{{ url('admin_user') }}">Usuarios</a></li>
-                            </ul>
-                        </li>
-                    </ul>
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <ul class="nav navbar-nav">
+                            <li><a href="{{ url('admin_dashboard') }}" ><i class="glyphicon glyphicon-home"></i></a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Contenido <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ url('admin_post') }}">Classification</a></li>
+                                    <li><a href="{{ url('admin_post') }}">News</a></li>
+                                    <li><a href="{{ url('admin_media_dashboard') }}">Media</a></li>
+                                    <li><a href="{{ url('admin_project_dashboard') }}">Proyectos</a></li>
+                                    <li><a href="{{ url('admin_shop_dashboard') }}">Productos</a></li>
+                                    <li><a href="{{ url('admin_page') }}">Paginas</a></li>
+                                    <li><a href="{{ url('admin_user') }}">Usuarios</a></li>
+                                </ul>
+                            </li>
+                        </ul>
 
 
-                    <ul class="nav navbar-nav pull-right">
+                        <ul class="nav navbar-nav pull-right">
 
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="glyphicon glyphicon-user"></i>
-                            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
-                                <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="{{ path('fos_user_profile_show') }}">Mi Perfil</a>
-                                </li>
-                                <li>
-                                    <a href="{{ path('fos_user_security_logout') }}">
-                                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li><a href="/adminHelp" ><i class="glyphicon glyphicon-question-sign"></i></a></li>
-                    </ul>
-                {% else %}
-                    <ul class="nav navbar-nav pull-right">
-                        <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
-                    </ul>
-                {% endif %}
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="glyphicon glyphicon-user"></i>
+                                    {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }}
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="{{ path('fos_user_profile_show') }}">Mi Perfil</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('fos_user_security_logout') }}">
+                                            {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><a href="/adminHelp" ><i class="glyphicon glyphicon-question-sign"></i></a></li>
+                        </ul>
+                    {% else %}
+                        <ul class="nav navbar-nav pull-right">
+                            <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
+                        </ul>
+                    {% endif %}
                 </div>
             </nav>
 
             <div class="container">
-            {% for flashMessage in app.session.flashbag.get('success') %}
-                <div class="alert alert-success">
-                {{ flashMessage }}
-                </div>
-            {% endfor %}
-            {% for flashMessage in app.session.flashbag.get('info') %}
-                <div class="alert alert-info">
-                {{ flashMessage }}
-                </div>
-            {% endfor %}
-            {% for flashMessage in app.session.flashbag.get('warning') %}
-                <div class="alert alert-warning">
-                {{ flashMessage }}
-                </div>
-            {% endfor %}
-            {% for flashMessage in app.session.flashbag.get('danger') %}
-                <div class="alert alert-danger">
-                {{ flashMessage }}
-                </div>
-            {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('success') %}
+                    <div class="alert alert-success">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('info') %}
+                    <div class="alert alert-info">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('warning') %}
+                    <div class="alert alert-warning">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
+                {% for flashMessage in app.session.flashbag.get('danger') %}
+                    <div class="alert alert-danger">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
             </div>
             <div class="container">
-
-                <ol class="breadcrumb">
-                    <li><a href="{{ path('admin_dashboard') }}">{{"Inicio"|trans}}</a></li>
-                    {% block migas %}{% endblock %}
-                </ol>
-                {% block body %}{% endblock %}
-                </div>
+                {% block body %}
+                {% endblock %}
+            </div>
             <div class="push"></div>
         </div>
         <div class="footer">
@@ -112,8 +108,8 @@
         </div>
 
         {% block javascripts %}
-        <script src="{{ asset('js/jquery.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.js') }}"></script>
+            <script src="{{ asset('js/jquery.js') }}"></script>
+            <script src="{{ asset('js/bootstrap.js') }}"></script>
         {% endblock %}
     </body>
 </html>

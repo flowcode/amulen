@@ -1,78 +1,69 @@
 {% extends '::backend.html.twig' %}
 
-{% block stylesheets %}
-    {{parent()}}
-    <link href="{{ asset('bundles/flowcodeuser/css/userGroupList.css') }}" rel="stylesheet" media="screen">
-{% endblock %}
-
 {% block body %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url('admin_dashboard') }}">{{ 'home'|trans|capitalize }}</a></li>
+        <li><a href="{{ url('admin_user_dashboard') }}">{{ 'user.dashboard'|trans|capitalize }}</a></li>
+        <li>{{ 'user.group.list'|trans|capitalize }}</li>
+    </ol>
+    <div class="page-header">
+        <ul class="list-inline pull-right">
+            <li>
+                <a class="btn btn-primary" href="{{ path('admin_usergroup_new') }}">
+                    {{ 'create'|trans }}
+                </a>
+            </li>
+        </ul>
+        <h1>{{ 'user.group.list'|trans|capitalize }}</h1>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>{{ 'name'|trans }}</th>
+                <th>{{ 'roles'|trans }}</th>
+                <th>{{ 'actions'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>
+                        <a href="{{ path('admin_usergroup_show', { 'id': entity.id }) }}">
+                            {{ entity.id }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ entity.name }}
+                    </td>
+                    <td>
+                        {%set roles = ""%}
+                        {%if entity.roles is defined%}
+                            {%for rol in entity.roles%}
+                                {%set roles = roles ~ rol%}
+                                {%if not loop.last%}
+                                    {%set roles = roles ~ ", "%}
+                                {%endif%}
+                            {%endfor%}
+                        {%else%}
+                            {{"Sin roles definidos"}}
+                        {%endif%}
 
-    <h1>User Group list</h1>
-
-    <div id="user_groups">
-        <div style="margin: 25px 0 5px 0;">
-            <a class="btn btn-primary" href="{{ path('admin_usergroup_new') }}">Create a new entry</a>
-            {% if entities %}
-            <span class="btn btn-primary" data-sort="name">Ordenar por nombre</span>
-            <span class="btn btn-primary" data-sort="aaa">Ordenar por rol</span>
-            {%endif%}
-        </div>
-        {% if entities %}
-        <div style="margin: 50px 0 15px 0;">
-            <span>Buscar</span>
-            <input class="search" />
-        </div>
-        <div class="list_container">
-            <ul class="list">
-                {% for entity in entities %}
-                <li>
-
-                    <a href="{{ path('admin_usergroup_show', { 'id': entity.id }) }}">
-                        <h3 class="name">
-                            {{ entity.name }}
-                        </h3>
-                    </a>
-                    {%set roles = ""%}
-                    {%if entity.roles is defined%}
-                        {%for rol in entity.roles%}
-                            {%set roles = roles ~ rol%}
-                            {%if not loop.last%}
-                                {%set roles = roles ~ ", "%}
-                            {%endif%}
-                        {%endfor%}
-                    {%else%}
-                        {{"Sin roles definidos"}}
-                    {%endif%}
-                    <p class="aaa">{{roles|trim}}</p>
-                    <!-- p class="">#{#{ entity.id }#}</p-->
-                    <p>
-                        <a href="{{ path('admin_usergroup_show', { 'id': entity.id }) }}">show</a>
-                        <a href="{{ path('admin_usergroup_edit', { 'id': entity.id }) }}">edit</a>
-                    </p>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-        {%endif%}
-    </div>        
-
-    {% if not entities %}
-        No hay grupos definidos...
-    {% endif %}
+                        <p class="aaa">{{roles|trim}}</p>
+                    </td>
+                    <td>
+                        <ul class="list-inline">
+                            <li>
+                                <a href="{{ path('admin_usergroup_show', { 'id': entity.id }) }}">show</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('admin_usergroup_edit', { 'id': entity.id }) }}">edit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 
 {% endblock %}
-    
-{% block javascripts %}
-    {{parent()}}
-    <!-- script src="{{ asset('bundles/flowcodeuser/js/libraries/list.min.js') }}"></script -->
-    <script src="http://listjs.com/no-cdn/list.js"></script>
-    <script>
-        $( document ).ready(function() {
-            var options = {
-                valueNames: [ 'name', 'aaa' ]
-            };
-
-            var list = new List('user_groups', options);
-        });
-    </script>
-{% endblock  %}

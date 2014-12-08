@@ -1,0 +1,14 @@
+## YAML Template.
+---
+
+security.login.username: username
+security.login.username: password
+
+user.dashboard: user dashboard
+user.list: user list
+user.create: create user
+user.delete: delete user
+user.edit: edit user
+
+user.group: user group
+user.group.list: user group list

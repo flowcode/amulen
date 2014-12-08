@@ -1,0 +1,16 @@
+## YAML Template.
+---
+
+security.login.username: Usuario
+security.login.username: Contraseña
+
+user.dashboard: tablero de usuario
+user.list: lista de usuarios
+user.create: crear usuario
+user.delete: borrar usuario
+user.edit: editar usuario
+
+user.group: grupo de usuarios
+user.group.list: lista de grupo de usuarios
+
+Plain password: password
