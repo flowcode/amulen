@@ -1,0 +1,31 @@
+{% extends '::frontend.html.twig' %}
+
+{% block body -%}
+<h1>Blog</h1>
+
+<div class="row">
+    <div class="col-sm-8">
+        {% for entity in pagination %}
+        <div class="media">
+                <a class="pull-left" href="#">
+                    {% if entity.getImage %} 
+                    <img class="media-object" src="{{ asset(entity.getImage.getWebPath) | imagine_filter('my_thumb') }}" alt="{{entity.getImage.name}}" />
+                    {% endif %}
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading"><a href="{{ path('post_show', { 'id': entity.id }) }}">{{ entity.title }}</a></h4>
+                    {{ entity.abstract }}
+                </div>
+            </div>
+        {% endfor %}
+
+        <div class="navigation">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <h3>Tags</h3>
+        
+    </div>
+</div>
+{% endblock %}

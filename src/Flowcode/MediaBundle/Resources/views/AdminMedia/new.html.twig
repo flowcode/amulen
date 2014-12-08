@@ -1,0 +1,16 @@
+{% extends '::backend.html.twig' %}
+
+{% block body -%}
+    <h1>Media upload</h1>
+
+    {{ form(form, { 'style': 'horizontal' }) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_media') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+    
+{% endblock %}

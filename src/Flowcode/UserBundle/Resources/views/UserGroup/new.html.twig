@@ -1,0 +1,42 @@
+{#
+
+ Displays a form to create a new UserGroup entity.
+
+ @Route("/new", name="admin_usergroup_new")
+ @Method("GET")
+ @Template("FlowcodeUserBundle:UserGroup:new.html.twig")
+
+ viewBag:
+    form Formulario para crear una entidad UserGroup
+        name string Nombre del grupo.
+    roles array lista de roles definidos en security.yml
+#}
+
+{% extends '::backend.html.twig' %}
+
+{% block body %}
+    <h1>User Group creation</h1>
+    <div style="width: 50%">
+        {%if form is defined%}
+            {{ form_start(form) }}
+                <a class="btn btn-primary" href="{{ path('admin_usergroup') }}">
+                    Back to the list
+                </a>        
+                {{ form_row(form.submit) }}
+                <br/>
+                <br/>
+                {{ form_row(form.name) }}
+                {%if roles is defined %}
+                <select multiple>
+                    {%for rol,rol_name in roles%}
+                        <option value="{{rol}}">{{rol_name}}</option>
+                    {%endfor%}
+                </select>
+                {%endif%}
+
+                {{ form_row(form._token) }}
+            {{ form_rest(form) }}
+        {%endif%}
+    </div>
+    
+{% endblock %}

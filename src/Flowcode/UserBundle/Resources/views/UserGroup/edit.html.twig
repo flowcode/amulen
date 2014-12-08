@@ -1,0 +1,37 @@
+{% extends '::backend.html.twig' %}
+
+{% block stylesheets %}
+    {{parent()}}
+    <link href="{{ asset('bundles/flowcodeuser/css/userGroupMenu.css') }}" rel="stylesheet" media="screen">
+{% endblock %}
+
+{% block body %}
+
+<div class="contenido">
+
+    <div class="encabezado">
+        <h1>UserGroup edit</h1>
+    </div>
+    
+    <div class ="userGroupMenu">
+        <div class="menuItem">
+            <a class ="btn btn-primary" href="{{ path('admin_usergroup') }}">
+                Back to the list
+            </a>
+        </div>
+        <div class="menuItem">
+            {{ form(delete_form) }}
+        </div>
+    </div>
+
+    <div class="cuerpo">
+        {{form_start(edit_form)}}
+        {{form_row(edit_form.name)}}
+        {{form_row(edit_form.roles)}}
+        {{form_row(edit_form.submit)}}
+        {{form_row(edit_form._token)}}
+        {{form_rest(edit_form)}}
+    </div>
+</div>
+
+{% endblock %}

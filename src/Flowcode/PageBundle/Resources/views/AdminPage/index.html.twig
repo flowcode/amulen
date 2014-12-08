@@ -1,0 +1,57 @@
+{% extends '::backend.html.twig' %}
+
+{% block body -%}
+<div class="page-header">
+    <h1>Page list</h1>
+    <ul class="list-inline">
+        <li>
+            <a href="{{ path('admin_page_new') }}" class="btn btn-default btn-sm">
+                <i class="glyphicon glyphicon-plus"></i> New page
+            </a>
+        </li>
+    </ul>
+</div>
+<table class="records_list table">
+    <thead>
+        <tr>
+            <th>{{ knp_pagination_sortable(pagination, 'Id', 'p.id') }}</th>
+            <th{% if pagination.isSorted('p.Name') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Name', 'p.name') }}</th>
+            <th>Slug</th>
+            <th>Description</th>
+            <th>Enabled</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for entity in pagination %}
+        <tr>
+            <td><a href="{{ path('admin_page_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.name }}</td>
+            <td>{{ entity.slug }}</td>
+            <td>{{ entity.description }}</td>
+            <td>{{ entity.enabled ? 'yes' : 'no' }}</td>
+            <td>
+                <ul class="list-inline">
+                    <li>
+                        <a class="btn btn-xs btn-default" href="{{ path('admin_page_blocks', { 'page_id': entity.id }) }}">blocks</a>
+                    </li>
+                    <li>
+                        <a class="btn btn-xs btn-default" href="{{ path('admin_page_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a class="btn btn-xs btn-default" href="{{ path('admin_page_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div class="count text-right">
+    Total of <span class="badge">{{ pagination.getTotalItemCount }}</span> pages.
+</div>
+<div class="navigation text-center">
+    {{ knp_pagination_render(pagination) }}
+</div>
+
+{% endblock %}

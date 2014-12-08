@@ -1,0 +1,64 @@
+{% extends '::backend.html.twig' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('bundles/fmelfinder/css/jquery-ui-1.8.21.custom.css')}}" rel="stylesheet" media="screen" />
+    <link href="{{ asset('bundles/fmelfinder/css/elfinder.min.css')}}" rel="stylesheet" media="screen" />
+    <link href="{{ asset('bundles/fmelfinder/css/theme.css')}}" rel="stylesheet" media="screen" />
+{% endblock %}
+
+{% block body -%}
+<div class="page-header">
+    <h1>GalleryItem creation</h1>
+    <ul class="list-inline">
+        <li>
+            <a href="{{ path('admin_galleryitem') }}" class="btn btn-default">
+                Back to the list
+            </a>
+        </li>
+    </ul>
+</div>
+
+{{ form_start(form, { 'style' : 'horizontal' }) }}
+
+{{ form_row(form.position) }}
+{{ form_row(form.gallery) }}
+{{ form_row(form.media.name) }}
+<div class="form-group">
+    {{ form_label(form.media.path) }}
+    <div class="col-lg-5">
+    {{ form_widget(form.media.path) }}
+    {{ form_errors(form.media.path) }}
+    </div>
+    <div class="col-lg-4">
+        <button class="btn btn-default" type="button" id="browser-trigger">
+            <i class="glyphicon glyphicon-search" ></i>
+            Imagen
+        </button>
+    </div>
+</div>
+
+{{ form_end(form) }}
+
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('bundles/fmelfinder/js/jquery/jquery-ui-1.8.23.custom.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fmelfinder/js/elfinder.min.js')}}"></script>
+    <script type="text/javascript">
+        $('#browser-trigger').click(function() {
+            $('<div id="editor" />').dialogelfinder({
+                url : '{{ path('ef_connect') }}',
+                getFileCallback: function(file) {
+                    $("#flowcode_mediabundle_galleryitem_media_path").val(file.path);
+                    $('#editor').dialogelfinder('close');
+                }
+            });
+        });
+
+    </script>
+
+{% endblock %}

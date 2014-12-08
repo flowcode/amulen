@@ -1,0 +1,17 @@
+{% extends '::backend.html.twig' %}
+
+{% block body -%}
+<div class="page-header">
+    <h1>{{ 'post.edit.title'|trans }}</h1>
+</div>
+{{ form(edit_form, { 'style': 'horizontal' }) }}
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('admin_post') }}">
+            {{ 'post.edit.back'|trans }}
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

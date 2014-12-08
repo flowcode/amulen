@@ -1,0 +1,83 @@
+{% extends '::backend.html.twig' %}
+
+{% block stylesheets %}
+    {{parent()}}
+    <link href="{{ asset('bundles/flowcodeuser/css/userGroupMenu.css') }}" rel="stylesheet" media="screen">
+{% endblock %}
+
+{% block body -%}
+    <div class="contenido">
+        <div class="encabezado">
+            <h1>User</h1>
+        </div>
+        <div class="userGroupMenu">
+            <div class="menuItem">
+                <a class="btn btn-primary" href="{{ path('admin_user') }}">
+                    Back to the list
+                </a>
+            </div>
+            <div class="menuItem">
+                <a class="btn btn-primary" href="{{ path('admin_user_edit', { 'id': entity.id }) }}">
+                    Edit
+                </a>
+            </div>
+            <div class="menuItem">
+                {{ form(delete_form) }}
+            </div>
+        </div>
+        <div class="cuerpo">
+            <table class="record_properties">
+                <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <td>{{ entity.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>{{ entity.email }}</td>
+                    </tr>
+                    
+                    <tr>
+                        <th>Username</th>
+                        <td>{{ entity.username }}</td>
+                    </tr>
+                    <tr>
+                        <th>Enabled</th>
+                        <td>
+                        {%if entity.enabled%}
+                            <div class="glyphicon glyphicon-thumbs-up"/>
+                            {%else%}
+                            <div class="glyphicon glyphicon-thumbs-down"/>
+                        {%endif%}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Locked</th>
+                        <td>
+                        {%if entity.locked %}
+                            <div class="glyphicon glyphicon-ban-circle"/>
+                            {%else%}
+                            <div class="glyphicon glyphicon-ok-circle"/>
+                        {%endif%}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Lastlogin</th>
+                        <td>{{ entity.lastLogin|date('Y-m-d H:i:s') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Created</th>
+                        <td>{{ entity.created|date('Y-m-d H:i:s') }}</td>
+                    </tr>
+                    <tr>
+                        <th>Updated</th>
+                        <td>{{ entity.updated|date('Y-m-d H:i:s') }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+
+
+{% endblock %}

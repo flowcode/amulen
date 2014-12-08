@@ -1,0 +1,16 @@
+sonata_seo:
+    page:
+        title: MiWeb Bici Store
+        metas:
+            name:
+                description:    Sitio de ejemplo de un local de venta de bicicletas.
+                keywords:       bicicletas, venta, local
+                robots:         index, follow
+            
+            property:
+                'og:site_name':       MiWeb Bici Store
+                'og:description':     Sitio de ejemplo de un local de venta de bicicletas.
+
+            http-equiv:
+                'Content-Type':         text/html; charset=utf-8
+                #'X-Ua-Compatible':      IE=EmulateIE7

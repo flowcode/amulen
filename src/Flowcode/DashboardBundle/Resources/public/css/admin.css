@@ -1,0 +1,57 @@
+@import url("fonts/fonts.css");
+
+html, body {
+    height: 100%;
+}
+
+.wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -4em;
+}
+.footer, .push {
+    height: 4em;
+}
+
+.footer {
+    bottom:0;
+    margin-top: 70px;
+}
+.footer p {
+    margin-bottom: 0;
+}
+
+.logo-small{
+    color: black;
+    text-decoration: none;
+    font-size: 16px;
+    font-family: 'Lobster1.4';
+}
+
+#loading-spin{
+    position: absolute;
+    z-index: 50;
+    width: 50px;
+    height: 50px;
+    margin-left: 50%;
+    margin-top: 5px;
+    display: none;
+}
+
+
+.btn-huge{
+    width: 100%;
+    padding: 20px;
+    margin-bottom: 5px;
+}
+
+.tile{
+    margin-bottom: 5px;
+}
+
+.elfinder .elfinder-button {
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}

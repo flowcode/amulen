@@ -1,0 +1,66 @@
+{% extends 'backend.html.twig' %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-sm-5">
+        <div class="row">
+            <div class="col-sm-6 tile">
+                <a class="btn btn-primary btn-block" href="{{ url('admin_post') }}">
+                    <div><i class="glyphicon glyphicon-bullhorn"></i></div>
+                    {{ 'News'|trans }}
+                </a>
+            </div>
+            <div class="col-sm-6 tile">
+                <a class="btn btn-primary btn-block" href="{{ url('admin_shop_dashboard') }}">
+                    <div><i class="glyphicon glyphicon-shopping-cart"></i></div>
+                    {{ 'Shop'|trans }}
+                </a>
+            </div>
+            <div class="col-sm-6 tile">
+                <a class="btn btn-primary btn-block" href="{{ url('admin_media_dashboard') }}">
+                    <div><i class="glyphicon glyphicon-picture"></i></div>
+                    {{ 'Multimedia'|trans }}
+                </a>
+            </div>
+            <div class="col-sm-6 tile">
+                <a class="btn btn-primary btn-block" href="{{ url('admin_page') }}">
+                    <div><i class="glyphicon glyphicon-leaf"></i></div>
+                    {{ 'Pages'|trans }}
+                </a>
+            </div>
+            <div class="col-sm-6 tile">
+                <a class="btn btn-primary btn-block" href="{{ url('admin_project_dashboard') }}">
+                    <div><i class="glyphicon glyphicon-book"></i></div>
+                    {{ 'Projects'|trans }}
+                </a>
+            </div>
+            <div class="col-sm-6 tile">
+                <a class="btn btn-primary btn-block" href="{{ url('admin_user_dashboard') }}">
+                    <div><i class="glyphicon glyphicon-user"></i></div>
+                    {{ 'Users'|trans }}
+                </a>
+            </div>
+            <div class="col-sm-6 tile">
+                <a class="btn btn-primary btn-block" href="{{ url('admin_classification') }}">
+                    <div><i class="glyphicon glyphicon-user"></i></div>
+                    {{ 'classification'|trans|capitalize }}
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-7">
+        <div>
+            <span></span>
+        </div>
+        <div class="jumbotron">
+            <h2>{{ 'welcome'|trans|capitalize }}</h2>
+            <p>{{'Today is'|trans}} {{ datime }}</p>
+        </div>
+        <div>
+            <h3>Lastest news</h3>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

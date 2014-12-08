@@ -1,0 +1,20 @@
+<?php
+
+namespace Flowcode\PageBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Translatable\Entity\MappedSuperclass\AbstractTranslation;
+
+/**
+ * Description of BlockTranslation
+ *
+ * @author Juan Manuel Agüero <jaguero@flowcode.com.ar>
+ * 
+ * @ORM\Table(name="block_translation", indexes={
+ *      @ORM\Index(name="block_translation_idx", columns={"locale", "object_class", "field", "foreign_key"})
+ * })
+ * @ORM\Entity(repositoryClass="Gedmo\Translatable\Entity\Repository\TranslationRepository")
+ */
+class BlockTranslation extends AbstractTranslation {
+    //put your code here
+}

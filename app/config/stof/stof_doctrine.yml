@@ -1,0 +1,8 @@
+stof_doctrine_extensions:
+    default_locale: es
+    orm:
+        default:
+            tree: true
+            sluggable: true
+            timestampable: true
+            translatable: false

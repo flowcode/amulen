@@ -1,0 +1,79 @@
+{% extends '::backend.html.twig' %}
+
+{% block body -%}
+    <ol class="breadcrumb">
+        <li><a href="{{ url('admin_dashboard') }}">{{ 'home'|trans }}</a></li>
+        <li><a href="{{ url('admin_user_dashboard') }}">{{ 'user.dashboard'|trans|capitalize }}</a></li>
+        <li>{{ 'user.users'|trans }}</li>
+    </ol>
+    <div class="page-header">
+        <ul class="list-inline pull-right">
+            <li>
+                <a class ="btn btn-primary" href="{{ path('admin_user_new') }}">
+                    {{ 'create'|trans }}
+                </a>
+            </li>
+        </ul>
+        <h1>{{ 'user.list'|trans }}</h1>
+    </div>
+
+
+    <table class="records_list table table-condensed">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Lastlogin</th>
+                <th>Enabled</th>
+                <th>Locked</th>
+                <th>Created</th>
+                <th>Updated</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.name }}</td>
+                    <td>{{ entity.email }}</td>
+                    <td><a href="{{ path('admin_user_show', { 'id': entity.id }) }}">{{ entity.username }}</a></td>
+                    <td>{% if entity.lastLogin %}{{ entity.lastLogin|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>
+                        {%if entity.enabled%}
+                            {{ 'yes'|trans }}
+                        {%else%}
+                            {{ 'no'|trans }}
+                        {%endif%}
+                    </td>
+                    <td>
+                        {%if entity.locked %}
+                            {{ 'yes'|trans }}
+                        {%else%}
+                            {{ 'no'|trans }}
+                        {%endif%}
+                    </td>
+                    <td>{% if entity.created %}{{ entity.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{% if entity.updated %}{{ entity.updated|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>
+                        <ul class="list-inline">
+                            <li>
+                                <a title="{{'show'|trans}}" class="btn btn-xs btn-default" href="{{ path('admin_user_show', { 'id': entity.id }) }}">
+                                    <i class="glyphicon glyphicon-eye-open"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a title="{{'edit'|trans}}" class="btn btn-xs btn-default" href="{{ path('admin_user_edit', { 'id': entity.id }) }}">
+                                    <i class="glyphicon glyphicon-edit"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}
+

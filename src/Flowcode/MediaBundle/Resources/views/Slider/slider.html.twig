@@ -1,0 +1,16 @@
+<section class="slider">
+    <nav class="slide-nav">
+        <ul>
+            {% for entity in gallery.galleryItems %}
+            <li><a href="#">{{ entity.position }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
+
+    <ul class="slides">
+        {% for entity in gallery.galleryItems %}
+        <li><img src="{{ asset(entity.getMedia.getWebPath) | imagine_filter('main_slider') }}" alt="{{ entity.getMedia.name }}"></li>    
+        {% endfor %}
+    </ul> 
+</section>
+

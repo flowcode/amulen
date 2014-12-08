@@ -1,0 +1,53 @@
+{% extends '::backend.html.twig' %}
+
+{% block body -%}
+<div class="page-header">
+    <h1>Gallery list
+        <small>{{ gallery.name }}</small>
+    </h1>
+    <ul class="list-inline">
+        <li>
+            <a href="{{ path('admin_gallery_item_new', { 'id' : gallery.id }) }}" class="btn btn-primary">
+                <i class="glyphicon glyphicon-plus"></i> {{ "add item"|trans }}
+            </a>
+        </li>
+    </ul>
+</div>
+
+<table class="records_list table table-condensed">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>{{ 'position'|trans }}</th>
+            <th>{{ 'name'|trans }}</th>
+            <th>{{ 'path'|trans }}</th>
+            <th>{{ 'actions'|trans }}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for galleryitem in items %}
+        <tr>
+            <td><a href="{{ path('admin_gallery_show', { 'id': galleryitem.id }) }}">{{ galleryitem.id }}</a></td>
+            <td>{{ galleryitem.position }}</td>
+            <td>{{ galleryitem.media.name }}</td>
+            <td>{{ galleryitem.media.path }}</td>
+            <td>
+                <ul class="list-inline">
+                    <li>
+                        <a href="{{ path('admin_gallery_item_edit', { 'id' : galleryitem.id }) }}">
+                            {{ 'edit'|trans }}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ path('admin_gallery_item_remove', { 'id' : galleryitem.id }) }}">
+                            {{ 'delete'|trans }}
+                        </a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

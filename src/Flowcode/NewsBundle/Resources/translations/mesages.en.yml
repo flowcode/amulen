@@ -1,0 +1,16 @@
+post:
+    edit:
+        title: Edit post
+        submit: Update Post
+        back: Back to list
+    show:
+        title: Post
+    new:
+        title: Create post
+        submit: Save
+    list:
+        title: Posts
+    flash:
+        updated: El post ha sido actualizado
+        created: El post ha sido creado
+        deleted: El post ha sido borrado

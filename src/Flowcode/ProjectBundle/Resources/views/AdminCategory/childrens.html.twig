@@ -1,0 +1,43 @@
+{% extends '::backend.html.twig' %}
+
+{% block body -%}
+
+<ol class="breadcrumb">
+    <li><a href="{{ path('admin_dashboard') }}">{{ "categorys"|trans }}</a></li>
+    <li><a href="{{ path('admin_project_dashboard') }}">{{ "projects dashboard"|trans }}</a></li>
+    <li><a href="{{ path('admin_project_category') }}">{{ "project categorys"|trans }}</a></li>
+    <li>{{ "categorys"|trans }}</li>
+</ol>
+<div class="page-header">
+    <h1>Children categorys</h1>
+</div>
+<div class="row">
+    <div class="col-sm-4">
+        <ul class="list-unstyled">
+            {% if parent.getParent.id is defined %}
+            <li>
+                <a href="{{ path('admin_project_category_children', { 'id': parent.getParent.id }) }}" class="btn btn-primary btn-block">
+                    <i class="glyphicon glyphicon-arrow-left"></i> {{ "previous level"|trans }}
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+    <div class="col-sm-4">
+        <ul class="list-unstyled">
+        {% for entity in entities %}
+            <li>
+                <a href="{{ path('admin_project_category_children', { 'id': entity.id }) }}" class="btn btn-default btn-block">
+                {{ entity.name }}
+                </a>
+            </li>
+        {% endfor %}
+            <li>
+                <a href="{{ path('admin_project_category_new', { 'parent_id': parent.id }) }}" class="btn btn-primary btn-block">
+                    <i class="glyphicon glyphicon-plus"></i> {{ "add here"|trans }}
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

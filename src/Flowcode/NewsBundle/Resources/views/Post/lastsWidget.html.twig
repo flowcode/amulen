@@ -1,0 +1,13 @@
+{% for entity in entities %}
+<div class="media">
+    <a class="pull-left" href="#">
+    {% if entity.getImage %} 
+        <img class="media-object" src="{{ asset(entity.getImage.getWebPath) | imagine_filter('my_thumb') }}" alt="{{entity.getImage.name}}" />
+    {% endif %}
+    </a>
+    <div class="media-body">
+        <h4 class="media-heading"><a href="{{ path('post_show', { 'id': entity.id }) }}">{{ entity.title }}</a></h4>
+            {{ entity.abstract }}
+    </div>
+</div>
+{% endfor %}

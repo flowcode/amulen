@@ -1,0 +1,69 @@
+{% extends '::backend.html.twig' %}
+
+{% block body %}
+    <ol class="breadcrumb">
+        <li><a href="{{ url('admin_dashboard') }}">{{ 'home'|trans|capitalize }}</a></li>
+        <li><a href="{{ url('admin_user_dashboard') }}">{{ 'user.dashboard'|trans|capitalize }}</a></li>
+        <li>{{ 'user.group.list'|trans|capitalize }}</li>
+    </ol>
+    <div class="page-header">
+        <ul class="list-inline pull-right">
+            <li>
+                <a class="btn btn-primary" href="{{ path('admin_usergroup_new') }}">
+                    {{ 'create'|trans }}
+                </a>
+            </li>
+        </ul>
+        <h1>{{ 'user.group.list'|trans|capitalize }}</h1>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>{{ 'name'|trans }}</th>
+                <th>{{ 'roles'|trans }}</th>
+                <th>{{ 'actions'|trans }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>
+                        <a href="{{ path('admin_usergroup_show', { 'id': entity.id }) }}">
+                            {{ entity.id }}
+                        </a>
+                    </td>
+                    <td>
+                        {{ entity.name }}
+                    </td>
+                    <td>
+                        {%set roles = ""%}
+                        {%if entity.roles is defined%}
+                            {%for rol in entity.roles%}
+                                {%set roles = roles ~ rol%}
+                                {%if not loop.last%}
+                                    {%set roles = roles ~ ", "%}
+                                {%endif%}
+                            {%endfor%}
+                        {%else%}
+                            {{"Sin roles definidos"}}
+                        {%endif%}
+
+                        <p class="aaa">{{roles|trim}}</p>
+                    </td>
+                    <td>
+                        <ul class="list-inline">
+                            <li>
+                                <a href="{{ path('admin_usergroup_show', { 'id': entity.id }) }}">show</a>
+                            </li>
+                            <li>
+                                <a href="{{ path('admin_usergroup_edit', { 'id': entity.id }) }}">edit</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

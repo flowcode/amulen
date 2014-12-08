@@ -1,0 +1,36 @@
+{% extends 'backend.html.twig' %}
+
+{% block migas %}
+    {{parent()}}
+    <li>{{"Tablero de al tienda"|trans}}</li>
+{% endblock %}
+    
+{% block body %}
+    
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+        <div class="row">
+            <div class="col-sm-4 tile">
+                <a class="btn btn-primary btn-block" href="{{ url('admin_product') }}">
+                    <div><i class="glyphicon glyphicon-bullhorn"></i></div>
+                    {{ 'Products'|trans }}
+                </a>
+            </div>
+            <div class="col-sm-4 tile">
+                <a class="btn btn-primary btn-block" href="{{ url('admin_shop_category') }}">
+                    <div><i class="glyphicon glyphicon-picture"></i></div>
+                    {{ 'Categorys'|trans }}
+                </a>
+            </div>
+            <div class="col-sm-4 tile">
+                <a class="btn btn-primary btn-block" href="{{ url('admin_page') }}">
+                    <div><i class="glyphicon glyphicon-leaf"></i></div>
+                    {{ 'Orders'|trans }}
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

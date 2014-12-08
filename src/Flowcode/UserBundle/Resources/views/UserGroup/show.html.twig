@@ -1,0 +1,50 @@
+{% extends '::backend.html.twig' %}
+
+{% block body %}
+
+<h1>{{"User Group"|trans}}</h1>
+
+<div style="width: 100%">
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <td>{{ name }}</td>
+            </tr>
+            <tr>
+                <th>Roles</th>
+                <td>
+                    {%if roles is defined%}
+                        {%for rol in roles%}
+                            {{rol}}
+                        {%endfor%}
+                    {%else%}
+                        {{"Sin roles definidos."}}
+                    {%endif%}
+                </td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ id }}</td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <br />
+    
+    {{ form_start(delete_form) }}
+    <a class = "btn btn-primary" href="{{ path('admin_usergroup') }}">
+        Back to the list
+    </a>
+    <a class="btn btn-primary" href="{{ path('admin_usergroup_edit', { 'id': id }) }}">
+        Edit
+    </a>
+    {{ form_widget(delete_form.submit) }}
+    {{ form_errors(delete_form) }}
+    {{ form_row(delete_form._token) }}
+    {{ form_end(delete_form) }}
+            
+</div>
+
+{% endblock %}

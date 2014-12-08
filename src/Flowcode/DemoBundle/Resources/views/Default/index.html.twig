@@ -1,0 +1,39 @@
+{% extends '::frontend.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="{{ asset('css/slimslider.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+
+<h3>{{ welcome }}</h3>
+<div class="row">
+
+    <div class="col-sm-6">
+        {{ render(controller('FlowcodeMediaBundle:Slider:mainSlider', {
+        'max': 3
+    })) }}
+    </div>
+    <div class="col-sm-6">
+        <div class="well">
+            <h4>Últimas Novedades</h4>
+            {{ render(controller('FlowcodeNewsBundle:Post:lasts')) }}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript" src="{{ asset('js/slimslider.min.js')}}"></script>
+<script>
+    $('.slider').slimSlider({
+        animSpeed: '0.5s', // animation speed
+        autoPlay: true, // auto play option
+        autoDelay: 4000, // auto play duration
+        hoverPause: true    // auto play pause on hover
+    });
+</script>
+{% endblock %}

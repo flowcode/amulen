@@ -1,0 +1,6 @@
+flowcode_page:
+    block_types:
+        type_text:
+            class_type: \Flowcode\PageBundle\Form\TextBlockType
+        type_html:
+            class_type: \Flowcode\PageBundle\Form\HtmlBlockType

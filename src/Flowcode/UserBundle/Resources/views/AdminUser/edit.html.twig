@@ -1,0 +1,30 @@
+{% extends '::backend.html.twig' %}
+
+{% block body -%}
+    <ol class="breadcrumb">
+        <li><a href="{{ url('admin_dashboard') }}">{{ 'home'|trans|capitalize }}</a></li>
+        <li><a href="{{ url('admin_user_dashboard') }}">{{ 'user.dashboard'|trans|capitalize }}</a></li>
+        <li>{{ 'user.edit'|trans|capitalize }}</li>
+    </ol>
+    <div class="page-header">
+        <ul class="list-inline pull-right">
+            <li>
+                <a class="btn btn-default" href="{{ path('admin_user') }}">
+                    {{ 'back'|trans}}
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-default" href="{{ path('admin_user_edit', { 'id': entity.id }) }}">
+                    {{ 'edit'|trans}}
+                </a>
+            </li>
+            <li>
+                {{ form(delete_form) }}
+            </li>
+        </ul>
+        <h1>{{ 'user.edit'|trans|capitalize }}</h1>
+    </div>
+    <div class="cuerpo">
+        {{ form(edit_form, { 'style': 'horizontal' }) }}
+    </div>
+{% endblock %}

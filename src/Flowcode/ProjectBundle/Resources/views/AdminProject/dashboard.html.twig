@@ -1,0 +1,28 @@
+{% extends 'backend.html.twig' %}
+
+{% block body %}
+<ol class="breadcrumb">
+    <li><a href="{{ path("admin_dashboard") }}">{{ "home"|trans }}</a></li>
+    <li>{{ "project dashboard"|trans }}</li>
+</ol>
+
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+        <div class="row">
+            <div class="col-sm-4 tile">
+                <a class="btn btn-primary btn-block" href="{{ url('admin_project_list') }}">
+                    <div><i class="glyphicon glyphicon-bullhorn"></i></div>
+                    {{ 'projects'|trans }}
+                </a>
+            </div>
+            <div class="col-sm-4 tile">
+                <a class="btn btn-primary btn-block" href="{{ url('admin_project_category') }}">
+                    <div><i class="glyphicon glyphicon-picture"></i></div>
+                    {{ 'categorys'|trans }}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
