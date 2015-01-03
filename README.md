@@ -1,7 +1,7 @@
 # AMULEN
 
 Amulen is a small proyect, who contain the more common and used features.
-The key idea of this proyect is give to you a complete proyect to start to work really fast and with the minimum effort.
+The key idea of this proyect is give to you a complete proyect to start work really fast and with the minimum effort.
 Some features are:
 
   - Backoffice dashboard,with nice layout.
